@@ -1,17 +1,19 @@
-[
-  {
-    "lastName": "ewf"
-  },
-  {
-    "firstName": "fwefewfwe"
-  },
-  {
-    "surname": "wefwef"
-  },
-  {
-    "birthday": "wefew"
-  },
-  {
-    "country": "fwef"
-  }
-]
+{
+  "content": [
+    {
+      "lastName": "er"
+    },
+    {
+      "firstName": "ewr"
+    },
+    {
+      "surname": "werewr"
+    },
+    {
+      "birthday": "wer"
+    },
+    {
+      "country": "wer"
+    }
+  ]
+}

@@ -87,7 +87,6 @@ ipcMain.on('generate-template', async (event,template) => {
     try {
         const [Form, Name, Content] = await Promise.all([loadForm(), loadName(), loadContent()]);
         const map = new Map(template.map(t => [t.name, t.value]));
-
         for (let i = 0; i < Content.content.length; i++) {
             const item = Content.content[i];
             if (item && typeof item === 'object') {
@@ -100,7 +99,7 @@ ipcMain.on('generate-template', async (event,template) => {
             }
         }
     }
-    await fs.promises.writeFile('content.json', JSON.stringify(Content.content, null, 2), 'utf8');
+    await fs.promises.writeFile('content.json', JSON.stringify({"content":Content.content}, null, 2), 'utf8');
         let result="";
         Content.content.forEach(elem=>{
             result+=`#set($${Object.keys(elem)[0]} = ${Object.values(elem)[0]})>
