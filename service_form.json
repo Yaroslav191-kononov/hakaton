@@ -1,0 +1,8 @@
+{ "fields": [
+     { "id": "lastName", "label": "FamilyName" },
+     { "id": "firstName", "label": "GivenName" } ,
+     { "id": "surname", "label": "Surname" } ,
+     { "id": "birthday", "label": "BirthDay" } ,
+     { "id": "country", "label": "Country" } 
+    ]
+}
