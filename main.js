@@ -127,8 +127,6 @@ for (const k of Object.keys(obj)) {
 
 ipcMain.handle('create-vm-template', async (event, templateParam = null, data = {}, params = {}) => {
   try {
-        console.log(await JSON.parse(data));
-                console.log(await JSON.parse(params));
     let templateToUse = templateParam || templateGlobal;
     if (!templateToUse) {
       templateToUse = await loadTemplateFromDisk();
@@ -145,7 +143,7 @@ context.params = params || {};
 context.dateTool = createDateTool();
 context.isEmpty = isEmptyHelper;
 
-try { attachIsEmpty(context); } catch (e) { /* noop */ }
+try { attachIsEmpty(context); } catch (e) {  }
 
 const vmCode = Velocity.render(templateToUse, context);
 return { success: true, vmCode };

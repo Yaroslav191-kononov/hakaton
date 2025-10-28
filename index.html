@@ -31,7 +31,7 @@
 <label>Тестовые JSON (тестовые JSON-файлы)</label>
 <input type="file" id="testJsonsInput" accept=".json" multiple/>
 
-<div class="params-container">
+<div class="params-container" style="display: none;">
     <h3>Настройки параметров</h3>
     <div class="param-row">
         <label for="prefix">Префикс:</label>
@@ -229,14 +229,14 @@
 
         try {
             const params = {
-                "prefix": prefixInput.value,
-                "handleNullValues": handleNullValuesSelect.value,
-                "dateFormat": dateFormatInput.value,
-                "transformFieldNames": transformFieldNamesSelect.value,
-                "generateConditionals": generateConditionalsSelect.value === "true",
-                "listElementName": listElementNameInput.value,
-                "validateData": validateDataSelect.value === "true",
-                "parseJsonStrings": parseJsonStringsSelect.value === "true"
+                "prefix": "soc:",
+                "handleNullValues":false,
+                "dateFormat": "yyyy-MM-dd",
+                "transformFieldNames": "camelCase",
+                "generateConditionals": true,
+                "listElementName": "Child",
+                "validateData": true,
+                "parseJsonStrings":true
             };
 
             const template = await window.electronAPI.loadTemplate();
@@ -251,7 +251,7 @@
         const result = await window.electronAPI.createVMTemplate(template, JSON.stringify(data, null, 2),JSON.stringify(params, null, 2));
 
             if (result && result.success) {
-                const vmCode = result.vmCode;
+                const vmCode = template;
                 vmCodeDisplay.textContent = vmCode;
                 vmCodeDisplay.style.display = 'block';
                 saveBtn.style.display = 'inline-block';
