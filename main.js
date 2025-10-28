@@ -3,9 +3,7 @@ const path = require('path');
 const fs = require('fs');
 const Velocity = require('velocityjs');
 
-
 let templateGlobal = null;
-
 
 async function loadTemplateFromDisk() {
   try {

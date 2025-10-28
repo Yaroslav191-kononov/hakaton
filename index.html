@@ -93,7 +93,7 @@
 <pre id="vmCodeDisplay" style="display:none;"></pre>
 
 <button id="saveBtn" style="display:none;">Сохранить шаблон</button>
-
+<button id="сlearBtn" style="display:none;">Удалить шаблон</button>
 <script>
     let projectName = '';
     let jsonSchema = null;
@@ -108,6 +108,7 @@
     const generateBtn = document.getElementById('generateBtn');
     const vmCodeDisplay = document.getElementById('vmCodeDisplay');
     const saveBtn = document.getElementById('saveBtn');
+    const сlearBtn = document.getElementById('сlearBtn');
 
     // Элементы управления параметрами
     const prefixInput = document.getElementById('prefix');
@@ -255,6 +256,7 @@
                 vmCodeDisplay.textContent = vmCode;
                 vmCodeDisplay.style.display = 'block';
                 saveBtn.style.display = 'inline-block';
+                сlearBtn.style.display="inline-block";
                 saveBtn.vmCode = vmCode;
             } else {
                 alert("Ошибка при создании VM-шаблона: " + (result.error || "Неизвестная ошибка"));
@@ -268,7 +270,9 @@
         }
     });
 
-
+    сlearBtn.addEventListener('click', async () => {
+        vmCodeDisplay.textContent = ""
+    });
     saveBtn.addEventListener('click', async () => {
         if (!saveBtn.vmCode) return;
 
