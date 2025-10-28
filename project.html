@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Загруженные проекты</title>
+<style>
+body {
+    font-family: sans-serif;
+    margin: 0;
+    background-color: #f5f8fa;
+}
+
+.container {
+    display: flex;
+    height: 100vh;
+}
+
+.sidebar {
+    width: 200px;
+    background-color: #fff;
+    border-right: 1px solid #e6eaf0;
+    padding: 20px;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar li {
+    padding: 10px 0;
+    cursor: pointer;
+}
+
+.sidebar li:hover {
+    color: #007bff;
+}
+
+.content {
+    flex: 1;
+    padding: 20px;
+}
+
+.header {
+    margin-bottom: 20px;
+}
+
+.filters {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.filters button, .filters input {
+    padding: 8px 12px;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+}
+
+.filters button {
+    background-color: #fff;
+    cursor: pointer;
+}
+
+.filters button.active {
+    background-color: #007bff;
+    color: #fff;
+    border-color: #007bff;
+}
+
+.table-container {
+    width: 100%;
+    border: 1px solid #e6eaf0;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #e6eaf0;
+}
+
+th {
+    background-color: #f5f8fa;
+    font-weight: 600;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #f9fafb;
+}
+
+.download-button {
+    background-color: #007bff;
+    color: #fff;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.download-button:hover {
+    background-color: #0056b3;
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+    <div class="sidebar">
+        <ul>
+            <li>Создать услугу</li>
+            <li class="active">Мои проекты</li>
+            <li>Инструкция</li>
+        </ul>
+    </div>
+    <div class="content">
+        <div class="header">
+            <h1>Загруженные проекты</h1>
+        </div>
+        <div class="filters">
+            <button class="active">Все</button>
+            <button>По дате</button>
+            <input type="text" placeholder="Поиск проекта">
+        </div>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Номер</th>
+                        <th>Название</th>
+                        <th>Дата создания</th>
+                        <th>Действия</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
+<script>
+    async function awaike(){
+        let arr=await window.electronAPI.getProject()
+        let tbody=document.querySelector("tbody");
+        let num=1;
+        arr.forEach(element => {
+            let tr=document.createElement("tr");
+            let td=document.createElement("td");
+            td.textContent=num++;
+            let td1=document.createElement("td");
+            td1.textContent=element.name;
+            let td2=document.createElement("td");
+            td2.textContent="27.10.2025";
+            let td3=document.createElement("td");
+            let button=document.createElement("button");
+            button.className="download-button";
+            button.textContent="Скачать";
+            button.addEventListener("click",async()=>{
+                const result = await window.electronAPI.saveFile(element.content);
+            });
+            td3.appendChild(button);
+            tr.appendChild(td);
+            tr.appendChild(td1);
+            tr.appendChild(td2);
+            tr.appendChild(td3);
+            tbody.appendChild(tr);
+        });
+    }
+awaike();
+
+
+
+</script>

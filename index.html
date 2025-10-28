@@ -2,36 +2,45 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
   <title>Генератор VM-шаблонов</title>
   <style>
+    :root{
+      --lighter-blue: #D8E1F6;
+      --light-blue: #4D83FA;
+      --blue: #1D5DEB;
+    }
+    *{
+      font-family: "PT Sans", sans-serif;
+    }
     body { 
       font-family: 'Inter', sans-serif; margin: 0; padding: 10px; background: #FFFFFF;
       display: flex;
    }
     .elems{
-      width: 25%;
-      margin-top: 48px;
-      padding: 40px 8px 8px 28px;
-      border-bottom: 1px solid #2563EB;
-      border-left: 1px solid #2563EB;
-      border-top: 1px solid #2563EB;
+      width: 20%;
+      padding-top: 40px;
+      border-bottom: 1px solid var(--lighter-blue);
+      border-left: 1px solid var(--lighter-blue);
+      border-top: 1px solid var(--lighter-blue);
       border-bottom-left-radius: 12px;
       border-top-left-radius: 12px;
     }
     .container {
-      border: 1px solid #2563EB;
+      border: 1px solid var(--lighter-blue);
       width: 80%;
-      margin-top: 48px;
       padding: 0px 48px 48px 48px;
       border-bottom-right-radius: 12px;
       border-top-right-radius: 12px;
     }
-    h1 {
-      font-size: 2rem;
-      font-weight: 700;
+    .container>h1 {
+      font-size: 3rem;
+      font-weight: 100;
       color: #1E293B;
       text-align: center;
-      margin-bottom: 32px; /* Increased spacing */
+      margin: 40px 0px; /* Increased spacing */
     }
 
     .input-group {
@@ -48,36 +57,58 @@
 
     input[type="text"],
     .custom-file-upload {
-    border: 1px solid #2563EB;
+    border: 2px solid var(--blue);
     height: 40px;
     width: 280px;
       padding: 12px;
-      border-radius: 6px;
-      font-size: 1rem;
+      border-radius: 11px;
+      font-size: 16px;
       color: #4B5563;
       outline: none;
     }
     input[type="file"] {
   display: none;
 }
+input[type="text"]{
+  height: 20px; width: 500px;
+}
+input[type="text"]::placeholder{
+  color: var(--blue);
+  opacity: .5;
+}
 
 .custom-file-upload {
   cursor: pointer;
+  font-size: 20px !important;
+  width: 185px !important;
+      text-align: center;
+    line-height: 40px;
+    color: var(--blue);
+}
+.active-article{
+  background-color: var(--lighter-blue);
 }
 article{
+  height: 70px;
+  font-size: 20px;
+  cursor: pointer;
   display: flex;
   align-items: center;
+  margin-bottom: 10px;
+  padding-left: 10px;
 }
-img{
+article:nth-of-type(2){
+  margin-left: 5px;
+}
+/* img{
   margin-right: 20px;
   width:50px;
   height:50px;
-}
+} */
 
     input[type="text"]:focus,
     input[type="file"]:focus {
-      border-color: #ebd425;
-      box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
+      box-shadow: 0px 0px 0px 2px var(--blue);
     }
 
     input[type="file"] {
@@ -85,20 +116,19 @@ img{
     }
 
     button {
-      padding: 14px 24px;
-      margin-left: 80%;
+      padding: 20px 70px;
+      margin-left: 75%;
       background: #2563EB;
       color: white;
       border: none;
-      border-radius: 6px;
+      border-radius: 11px;
       cursor: pointer;
-      font-size: 1rem;
-      font-weight: 600;
+      font-size: 25px;
       transition: background-color 0.2s ease;
     }
 
     button:disabled {
-      background: #9CA3AF;
+      background: #b4c4e0;
       cursor: not-allowed;
     }
 
@@ -107,15 +137,19 @@ img{
     }
 
     pre {
+      width: 90%;
+      height: 500px;
+      overflow-y: scroll;
       background: #F3F4F6;
       padding: 24px;
-      border-radius: 6px;
+      border-radius: 11px;
       display: none;
-      overflow-x: auto;
+      overflow-x: scroll;
       white-space: pre;
       font-size: 0.875rem;
       color: #374151;
       line-height: 1.5;
+      margin-top: 30px;
     }
 
     /* Стиль для обязательных полей */
@@ -124,7 +158,10 @@ img{
       color: red;
       margin-left: 4px;
     }
-
+    a{
+      text-decoration: none;
+      color: black;
+    }
     /* Дополнительные стили для улучшения внешнего вида */
     .input-group:last-child {
       margin-bottom: 0;
@@ -133,55 +170,70 @@ img{
 
       /* Добавляем отступы между инпутами */
     .input-group > label {
-      margin-bottom: 8px; /* Adds spacing between labels and inputs */
+      margin-bottom: 10px; /* Adds spacing between labels and inputs */
+      font-size: 22px;
     }
-
+    .input-group::marker{
+      color: var(--light-blue);
+      font-size: 30px;
+    }
+    label.required-field::after{
+      display: none;
+    }
+    #projectNameInput::placeholder{
+      color: var(--blue);
+    }
 
   </style>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
+  <!-- <div class="top">
+    <h1>Загрузить услугу</h1>
+  </div> -->
+
     <div class="elems">
-        <article>
-            <img src="Rocket_Unselected.png" alt="">
-                        <p>Создать Услугу</p>
+        <article class="active-article">
+            <img width="45px" src="Rocket_Selected.png" alt="">
+                        <p>&nbsp;&nbsp;Создать услугу</p>
         </article>
-        <article>
-            <img src="Folder_Unselected.png" alt="">
-                        <p>Мои проекты</p>
+        <article  class="inactive-article">
+            <img width="32px" src="Folder_Unselected.png" alt="">
+                        <a href="project.html">&nbsp;&nbsp;&nbsp;&nbsp;Мои проекты</a>
         </article>
-        <article>
-            <img src="View_Unselected.png" alt="">
-                        <p>Инструкции</p>
+        <article class="inactive-article">
+            <img width="40px" src="View_Unselected.png" alt="">
+                        <p>&nbsp;&nbsp;&nbsp;Инструкции</p>
         </article>
     </div>
   <div class="container">
     <h1>Прикрепите файлы</h1>
-    <ul>
-    <li class="input-group">
+        <div class="input-group">
       <label for="projectNameInput" class="required-field">Название проекта:</label>
-      <input type="text" id="projectNameInput" placeholder="Введите название" />
-    </li>
+      <input type="text" id="projectNameInput" placeholder="Назовите шаблон" />
+    </div>
+    <ul>
+
 
     <li class="input-group">
         <label for="jsonSchemaInput" class="required-field">JSON-схема услуги</label>
-      <label for="jsonSchemaInput" class="custom-file-upload">загрузить файл</label>
+      <label for="jsonSchemaInput" class="custom-file-upload" id="json1">Загрузить файл</label>
       <input type="file" id="jsonSchemaInput" accept=".json" />
     </li>
 
     <li class="input-group">
       <label for="xsdSchemaInput" class="required-field">XSD-схема вида сведений</label>
-      <label for="xsdSchemaInput" class="custom-file-upload">загрузить файл</label>
+      <label for="xsdSchemaInput" class="custom-file-upload" id="xsd1">Загрузить файл</label>
       <input type="file" id="xsdSchemaInput" accept=".xsd" />
-    </ul>
     <li class="input-group">
-      <label for="testJsonsInput" class="required-field">Тестовые JSON-файлы (необязательно):</label>
-      <label for="testJsonsInput" class="custom-file-upload">загрузить файл</label>
+      <label for="testJsonsInput" class="required-field">Один или несколько JSON-файлов тестовых заявлений (необязательно):</label>
+      <label for="testJsonsInput" class="custom-file-upload" id="json2">Загрузить файлы</label>
       <input type="file" id="testJsonsInput" accept=".json" multiple />
     </li>
     </ul>
     <button id="generateBtn" disabled>Создать</button>
       <pre id="vmCodeDisplay"></pre>
+      <button id="saveBtn" style="display:none;">Сохранить шаблон</button>
   <script>
     const projectNameInput = document.getElementById('projectNameInput');
     const jsonSchemaInput = document.getElementById('jsonSchemaInput');
@@ -189,6 +241,7 @@ img{
     const testJsonsInput = document.getElementById('testJsonsInput');
     const generateBtn = document.getElementById('generateBtn');
     const vmCodeDisplay = document.getElementById('vmCodeDisplay');
+    const saveBtn = document.getElementById('saveBtn');
 
     let projectName = '';
     let jsonSchema = null;
@@ -268,16 +321,34 @@ img{
         xsdSchema,
         testJsons
       };
-
+      
       try {
         const vmCode = await window.electronAPI.createVMTemplate(null, data, params);
         vmCodeDisplay.textContent = vmCode;
         vmCodeDisplay.style.display="block";
+        saveBtn.style.display = 'block';
+        saveBtn.vmCode = vmCode;
       } catch (err) {
         alert("Ошибка генерации: " + err.message);
       }
     });
+      saveBtn.addEventListener('click', async () => {
+      if (!saveBtn.vmCode) return;
 
+        try {
+            const result = await window.electronAPI.saveFile(saveBtn.vmCode);
+            if (result && result.success) {
+                alert(`Файл успешно сохранён: ${result.filePath}`);
+            } else if (result && result.canceled) {
+                alert('Сохранение отменено'); 
+            } else {
+                alert('Ошибка при сохранении: ' + (result?.error || 'Неизвестная ошибка'));
+            }
+        } catch (error) {
+            console.error("Error saving file:", error);
+            alert("Ошибка при сохранении файла: " + error.message);
+        }
+    });
     updateCanGenerate();
   </script>
 </body>

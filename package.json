@@ -33,6 +33,7 @@
     "got": "^11.8.6",
     "graceful-fs": "^4.2.11",
     "has-property-descriptors": "^1.0.2",
+    "he": "^1.2.0",
     "http-cache-semantics": "^4.2.0",
     "http2-wrapper": "^1.0.3",
     "json-buffer": "^3.0.1",

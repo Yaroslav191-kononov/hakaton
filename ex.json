@@ -1,0 +1,793 @@
+{
+  "serviceCode": "60071831",
+  "targetCode": "-60071831",
+  "orderId": 4651667788,
+  "currentScenarioId": 1,
+  "serviceDescriptorId": "60071831",
+  "currentUrl": "https://svcdev-beta.test.gosuslugi.ru/671831/1/form",
+  "finishedAndCurrentScreens": [
+    "Start",
+    "ApplicantQuestion",
+    "s58",
+    "s1",
+    "s16",
+    "s9",
+    "s11",
+    "s3",
+    "s4",
+    "s39",
+    "PayQuestion",
+    "s13",
+    "s54",
+    "Personal",
+    "s20",
+    "s21",
+    "AddressReg",
+    "s38",
+    "s67",
+    "s68",
+    "s69",
+    "s8",
+    "s26",
+    "s15",
+    "s17",
+    "s12",
+    "s22",
+    "s61",
+    "es2_2800",
+    "es3_2800",
+    "s2",
+    "s28",
+    "s18",
+    "s37",
+    "s44",
+    "s32",
+    "s29",
+    "s56",
+    "s40",
+    "s41",
+    "s42",
+    "s46",
+    "s50",
+    "s51"
+  ],
+  "cachedAnswers": {},
+  "currentValue": {
+    "c40": {
+      "visited": true,
+      "value": "{\"id\":\"f925cabf-6e08-40c1-9e29-7ded21dbd85e\",\"text\":\"ОГКУ ЦСПН  Краснознаменск\",\"originalItem\":{\"value\":\"f925cabf-6e08-40c1-9e29-7ded21dbd85e\",\"title\":\"1\",\"isLeaf\":true,\"children\":[],\"attributes\":[{\"name\":\"CODE\",\"type\":\"STRING\",\"value\":{\"asString\":\"f925cabf-6e08-40c1-9e29-7ded21dbd85e\",\"typeOfValue\":\"STRING\",\"value\":\"f925cabf-6e08-40c1-9e29-7ded21dbd85e\"},\"valueAsOfType\":\"f925cabf-6e08-40c1-9e29-7ded21dbd85e\"},{\"name\":\"SERVICE_CODE\",\"type\":\"STRING\",\"value\":{\"asString\":\"1\",\"typeOfValue\":\"STRING\",\"value\":\"1\"},\"valueAsOfType\":\"1\"},{\"name\":\"NAME\",\"type\":\"STRING\",\"value\":{\"asString\":\"Центр социальной поддержки населения  Краснознаменск\",\"typeOfValue\":\"STRING\",\"value\":\"Центр социальной поддержки населения  Краснознаменск\"},\"valueAsOfType\":\"Центр социальной поддержки населения  Краснознаменск\"},{\"name\":\"SHORT_NAME\",\"type\":\"STRING\",\"value\":{\"asString\":\"ОГКУ ЦСПН  Краснознаменск\",\"typeOfValue\":\"STRING\",\"value\":\"ОГКУ ЦСПН  Краснознаменск\"},\"valueAsOfType\":\"ОГКУ ЦСПН  Краснознаменск\"},{\"name\":\"ADDRESS\",\"type\":\"STRING\",\"value\":{\"asString\":\"238730, Калининградская область, Краснознаменский район, г.Краснознаменск\",\"typeOfValue\":\"STRING\",\"value\":\"238730, Калининградская область, Краснознаменский район, г.Краснознаменск\"},\"valueAsOfType\":\"238730, Калининградская область, Краснознаменский район, г.Краснознаменск\"},{\"name\":\"TELEFON\",\"type\":\"STRING\",\"value\":{\"asString\":\"8 800 201-39-00 (доб 3)\",\"typeOfValue\":\"STRING\",\"value\":\"8 800 201-39-00 (доб 3)\"},\"valueAsOfType\":\"8 800 201-39-00 (доб 3)\"},{\"name\":\"EMAIL\",\"type\":\"STRING\",\"value\":{\"asString\":\"center-social@soc.gov39.ru\",\"typeOfValue\":\"STRING\",\"value\":\"center-social@soc.gov39.ru\"},\"valueAsOfType\":\"center-social@soc.gov39.ru\"}],\"attributeValues\":{\"CODE\":\"f925cabf-6e08-40c1-9e29-7ded21dbd85e\",\"TELEFON\":\"8 800 201-39-00 (доб 3)\",\"SERVICE_CODE\":\"1\",\"ADDRESS\":\"238730, Калининградская область, Краснознаменский район, г.Краснознаменск\",\"EMAIL\":\"center-social@soc.gov39.ru\",\"SHORT_NAME\":\"ОГКУ ЦСПН  Краснознаменск\",\"NAME\":\"Центр социальной поддержки населения  Краснознаменск\"}}}",
+      "disabled": false
+    },
+    "c97": {
+      "visited": true,
+      "disabled": false
+    }
+  },
+  "errors": {},
+  "uniquenessErrors": [],
+  "applicantAnswers": {
+    "c121": {
+      "visited": true
+    },
+    "c31": {
+      "visited": true,
+      "value": "1998-10-01T00:00:00.000+03:00"
+    },
+    "PayChoice": {
+      "visited": true,
+      "value": "v2"
+    },
+    "c30": {
+      "visited": true,
+      "value": "Петрович"
+    },
+    "c33": {
+      "visited": true,
+      "value": "1"
+    },
+    "c100": {
+      "visited": true
+    },
+    "c32": {
+      "visited": true,
+      "value": "город Калининград"
+    },
+    "c14": {
+      "visited": true,
+      "value": "1"
+    },
+    "c36": {
+      "visited": true,
+      "value": ""
+    },
+    "c17": {
+      "visited": true,
+      "value": "rus"
+    },
+    "c38": {
+      "visited": true,
+      "value": "1"
+    },
+    "c19": {
+      "visited": true,
+      "value": "1"
+    },
+    "StartInfo": {
+      "visited": true
+    },
+    "ApplicantChoice": {
+      "visited": true,
+      "value": "v1"
+    },
+    "c84": {
+      "visited": true
+    },
+    "c83": {
+      "visited": true,
+      "value": "{\"regionType\":\"область\",\"regionShortType\":\"обл\",\"region\":\"Калининградская\",\"cityType\":\"город\",\"cityShortType\":\"г\",\"city\":\"Калининград\",\"districtType\":\"\",\"districtShortType\":\"\",\"district\":\"\",\"townType\":\"\",\"townShortType\":\"\",\"town\":\"\",\"additionalTownType\":\"\",\"additionalTownShortType\":\"\",\"additionalTown\":\"\",\"inCityDistType\":\"\",\"inCityDistShortType\":\"\",\"inCityDist\":\"\",\"streetType\":\"улица\",\"streetShortType\":\"ул\",\"street\":\"Уральская\",\"additionalAreaType\":\"\",\"additionalAreaShortType\":\"\",\"additionalArea\":\"\",\"additionalStreetType\":\"\",\"additionalStreetShortType\":\"\",\"additionalStreet\":\"\",\"houseType\":\"дом\",\"houseShortType\":\"д\",\"house\":\"18\",\"houseCheckbox\":false,\"houseCheckboxClosed\":false,\"building1Type\":\"\",\"building1ShortType\":\"\",\"building1\":\"\",\"building2Type\":\"\",\"building2ShortType\":\"\",\"building2\":\"\",\"apartmentType\":\"\",\"apartmentShortType\":\"\",\"apartment\":\"\",\"litera\":\"\",\"literaType\":\"\",\"literaShortType\":\"\",\"room\":\"\",\"roomType\":\"\",\"roomShortType\":\"\",\"stead\":\"\",\"steadType\":\"\",\"steadShortType\":\"\",\"apartmentCheckbox\":true,\"apartmentCheckboxClosed\":true,\"index\":\"236022\",\"geoLat\":\"54.7248041\",\"geoLon\":\"20.5018438\",\"fullAddress\":\"236022, обл. Калининградская, г. Калининград, ул. Уральская, д. 18\",\"addressStr\":\"обл. Калининградская, г. Калининград, ул. Уральская\",\"lat\":\"54.7248041\",\"lng\":\"20.5018438\",\"kladrCode\":\"3900000100008600015\",\"fiasCode\":\"c4159eec-e653-489d-b14d-0259c3fd50fb\",\"regionFias\":\"90c7181e-724f-41b3-b6c6-bd3ec7ae3f30\",\"regionKladr\":\"3900000000000\",\"townFias\":\"\",\"townKladr\":\"\",\"streetFias\":\"d39f302d-7b97-4baf-806d-e82241454b63\",\"streetKladr\":\"39000001000086000\",\"houseFias\":\"c4159eec-e653-489d-b14d-0259c3fd50fb\",\"houseKladr\":\"3900000100008600015\",\"apartmentFias\":\"\",\"apartmentKladr\":\"\",\"okato\":\"27401385000\",\"oktmo\":\"27701000001\",\"hasErrors\":0,\"regionCode\":\"39\",\"postalCode\":\"\",\"oktmoName\":\"\",\"esiaAddressSrt\":\"\",\"esiaFullAddress\":\"\",\"isNormalizedAddress\":false}"
+    },
+    "c64": {
+      "visited": true
+    },
+    "c42": {
+      "visited": true,
+      "value": "{\"act_rec_date\":\"2025-10-01T00:00:00.000+02:00\",\"act_rec_number\":\"020250000000000000098\",\"act_rec_registrator\":{\"id\":\"R3900001\",\"text\":\"Управление ЗАГС администрации городского округа \\\"Город Калининград\\\"\",\"originalItem\":{\"pr3\":\"false\",\"code\":\"R3900001\",\"dataNi\":20161001,\"code_new\":\"93900001\",\"fullname\":\"Управление ЗАГС администрации городского округа \\\"Город Калининград\\\"\",\"dataN\":\"2016-10-01\"}}}"
+    },
+    "c41": {
+      "visited": true,
+      "value": ""
+    },
+    "c44": {
+      "visited": true,
+      "value": "d.volin@gov39.ru"
+    },
+    "c134": {
+      "visited": true
+    },
+    "c88": {
+      "visited": true
+    },
+    "c111": {
+      "visited": true
+    },
+    "c43": {
+      "visited": true,
+      "value": "+7(911)4665763"
+    },
+    "c23": {
+      "visited": true
+    },
+    "c89": {
+      "visited": true
+    },
+    "c26": {
+      "visited": true,
+      "value": "Петр"
+    },
+    "c25": {
+      "visited": true,
+      "value": "Петров"
+    },
+    "c49": {
+      "visited": true,
+      "value": "Иванова Ирина Ивановна"
+    },
+    "sc50_2800": {
+      "visited": true
+    },
+    "AddressRegInfo": {
+      "visited": true,
+      "value": "{\"address\":{\"regionType\":\"область\",\"regionShortType\":\"обл\",\"region\":\"Калининградская\",\"cityType\":\"город\",\"cityShortType\":\"г\",\"city\":\"Калининград\",\"districtType\":\"\",\"districtShortType\":\"\",\"district\":\"\",\"townType\":\"\",\"townShortType\":\"\",\"town\":\"\",\"additionalTownType\":\"\",\"additionalTownShortType\":\"\",\"additionalTown\":\"\",\"inCityDistType\":\"\",\"inCityDistShortType\":\"\",\"inCityDist\":\"\",\"streetType\":\"улица\",\"streetShortType\":\"ул\",\"street\":\"Горького\",\"additionalAreaType\":\"\",\"additionalAreaShortType\":\"\",\"additionalArea\":\"\",\"additionalStreetType\":\"\",\"additionalStreetShortType\":\"\",\"additionalStreet\":\"\",\"houseType\":\"дом\",\"houseShortType\":\"д\",\"house\":\"1\",\"houseCheckbox\":false,\"houseCheckboxClosed\":false,\"building1Type\":\"\",\"building1ShortType\":\"\",\"building1\":\"\",\"building2Type\":\"\",\"building2ShortType\":\"\",\"building2\":\"\",\"apartmentType\":\"\",\"apartmentShortType\":\"\",\"apartment\":\"\",\"litera\":\"\",\"literaType\":\"\",\"literaShortType\":\"\",\"room\":\"\",\"roomType\":\"\",\"roomShortType\":\"\",\"stead\":\"\",\"steadType\":\"\",\"steadShortType\":\"\",\"apartmentCheckbox\":true,\"apartmentCheckboxClosed\":false,\"index\":\"236040\",\"geoLat\":\"54.723257\",\"geoLon\":\"20.507945\",\"fullAddress\":\"236040, обл. Калининградская, г. Калининград, ул. Горького, д. 1\",\"addressStr\":\"обл. Калининградская, г. Калининград, ул. Горького, д. 1\",\"lat\":\"54.723257\",\"lng\":\"20.507945\",\"kladrCode\":\"3900000100002130005\",\"fiasCode\":\"42a79fa8-0278-4932-969c-8115f4d65dc3\",\"regionFias\":\"90c7181e-724f-41b3-b6c6-bd3ec7ae3f30\",\"regionKladr\":\"3900000000000\",\"townFias\":\"\",\"townKladr\":\"\",\"streetFias\":\"eb2fa5a8-1887-453a-af08-82e00f5c2c65\",\"streetKladr\":\"39000001000021300\",\"houseFias\":\"42a79fa8-0278-4932-969c-8115f4d65dc3\",\"houseKladr\":\"3900000100002130005\",\"apartmentFias\":\"\",\"apartmentKladr\":\"\",\"okato\":\"27401368000\",\"oktmo\":\"27701000001\",\"hasErrors\":0,\"regionCode\":\"39\",\"postalCode\":\"236040\",\"oktmoName\":\"\",\"esiaAddressSrt\":\"236040, обл. Калининградская, г. Калининград, ул. Горького, д. 1\",\"esiaFullAddress\":\"236040, обл. Калининградская, г. Калининград, ул. Горького, д. 1\"},\"registrationData\":{}}"
+    },
+    "c2": {
+      "visited": true,
+      "value": "[{\"c5\":\"9524999\",\"c6\":\"Иванов\",\"c7\":\"Иван\",\"c13\":\"2017-04-25T00:00:00.000Z\",\"c24\":\"RF_BRTH_CERT\",\"c12\":\"Иванович\",\"c15\":\"M\",\"c16\":\"false\",\"id\":\"9524999\",\"c108\":\"1\",\"sc42_2800\":{\"states\":[{\"groupName\":\"Иванов Иван Иванович\",\"fields\":[{\"label\":\"Дата рождения\",\"value\":\"25.04.2017\"},{\"label\":\"СНИЛС\",\"value\":\"015-345-455 27\"}]},{\"groupName\":\"Свидетельство о рождении\",\"fields\":[{\"label\":\"Серия и номер\",\"value\":\"I-РО 3434343\"},{\"label\":\"Актовая запись\",\"value\":\"3434343434\"},{\"label\":\"Дата выдачи\",\"value\":\"25.04.2017\"},{\"label\":\"Кем выдан\",\"value\":\"кпкапк\"},{\"label\":\"Дата актовой записи\",\"value\":\"25.04.2017\"}]}],\"storedValues\":{\"firstName\":\"Иван\",\"middleName\":\"Иванович\",\"lastName\":\"Иванов\",\"birthDate\":\"25.04.2017\",\"snils\":\"015-345-455 27\",\"rfBirthCertificateSeries\":\"I-РО\",\"rfBirthCertificateNumber\":\"3434343\",\"rfBirthCertificateActNumber\":\"3434343434\",\"rfBirthCertificateIssueDate\":\"25.04.2017\",\"rfBirthCertificateIssuedBy\":\"кпкапк\",\"actDate\":\"25.04.2017\",\"docType\":\"RF_BRTH_CERT\"},\"errors\":[]},\"ariaLabel\":\"Иван 8 лет\"},{\"c5\":\"9520407\",\"c6\":\"Иванова\",\"c7\":\"Мария\",\"c13\":\"2012-05-05T00:00:00.000Z\",\"c24\":\"RF_BRTH_CERT\",\"c12\":\"Олеговна\",\"c15\":\"F\",\"c16\":\"false\",\"id\":\"9520407\",\"c108\":\"1\",\"sc42_2800\":{\"states\":[{\"groupName\":\"Иванова Мария Олеговна\",\"fields\":[{\"label\":\"Дата рождения\",\"value\":\"05.05.2012\"},{\"label\":\"СНИЛС\",\"value\":\"015-345-455 27\"}]},{\"groupName\":\"Свидетельство о рождении\",\"fields\":[{\"label\":\"Серия и номер\",\"value\":\"IV-АА 6569898\"},{\"label\":\"Актовая запись\",\"value\":\"6898565656\"},{\"label\":\"Дата выдачи\",\"value\":\"05.05.2012\"},{\"label\":\"Кем выдан\",\"value\":\"Калининград\"},{\"label\":\"Дата актовой записи\",\"value\":\"05.05.2012\"}]}],\"storedValues\":{\"firstName\":\"Мария\",\"middleName\":\"Олеговна\",\"lastName\":\"Иванова\",\"birthDate\":\"05.05.2012\",\"snils\":\"015-345-455 27\",\"rfBirthCertificateSeries\":\"IV-АА\",\"rfBirthCertificateNumber\":\"6569898\",\"rfBirthCertificateActNumber\":\"6898565656\",\"rfBirthCertificateIssueDate\":\"05.05.2012\",\"rfBirthCertificateIssuedBy\":\"Калининград\",\"actDate\":\"05.05.2012\",\"docType\":\"RF_BRTH_CERT\"},\"errors\":[]},\"ariaLabel\":\"Мария 13 лет\"},{\"c13\":\"2008-01-01T00:00:00.000Z\",\"c24\":\"RF_BRTH_CERT\",\"c12\":\"Петрович\",\"c15\":\"M\",\"c16\":\"false\",\"sc42_2800\":{\"states\":[{\"groupName\":\"Петров Петр Петрович\",\"fields\":[{\"label\":\"Дата рождения\",\"value\":\"01.01.2008\"},{\"label\":\"СНИЛС\",\"value\":\"775-592-099 62\"}]},{\"groupName\":\"Свидетельство о рождении\",\"fields\":[{\"label\":\"Серия и номер\",\"value\":\"IV-АА 111111\"},{\"label\":\"Актовая запись\",\"value\":\"111111\"},{\"label\":\"Дата выдачи\",\"value\":\"01.01.2008\"},{\"label\":\"Кем выдан\",\"value\":\"г. Калининград\"},{\"label\":\"Дата актовой записи\",\"value\":\"01.01.2008\"}]}],\"storedValues\":{\"firstName\":\"Петр\",\"middleName\":\"Петрович\",\"lastName\":\"Петров\",\"birthDate\":\"01.01.2008\",\"snils\":\"775-592-099 62\",\"rfBirthCertificateSeries\":\"IV-АА\",\"rfBirthCertificateNumber\":\"111111\",\"rfBirthCertificateActNumber\":\"111111\",\"rfBirthCertificateIssueDate\":\"01.01.2008\",\"rfBirthCertificateIssuedBy\":\"г. Калининград\",\"actDate\":\"01.01.2008\",\"docType\":\"RF_BRTH_CERT\"},\"errors\":[]},\"ariaLabel\":\"Петр 17 лет\",\"c5\":\"9553852\",\"c6\":\"Петров\",\"c7\":\"Петр\",\"c109\":{\"regionType\":\"область\",\"regionShortType\":\"обл\",\"region\":\"Калининградская\",\"cityType\":\"город\",\"cityShortType\":\"г\",\"city\":\"Калининград\",\"districtType\":\"\",\"districtShortType\":\"\",\"district\":\"\",\"townType\":\"\",\"townShortType\":\"\",\"town\":\"\",\"additionalTownType\":\"\",\"additionalTownShortType\":\"\",\"additionalTown\":\"\",\"inCityDistType\":\"\",\"inCityDistShortType\":\"\",\"inCityDist\":\"\",\"streetType\":\"улица\",\"streetShortType\":\"ул\",\"street\":\"Горького\",\"additionalAreaType\":\"\",\"additionalAreaShortType\":\"\",\"additionalArea\":\"\",\"additionalStreetType\":\"\",\"additionalStreetShortType\":\"\",\"additionalStreet\":\"\",\"houseType\":\"дом\",\"houseShortType\":\"д\",\"house\":\"1\",\"houseCheckbox\":false,\"houseCheckboxClosed\":false,\"building1Type\":\"\",\"building1ShortType\":\"\",\"building1\":\"\",\"building2Type\":\"\",\"building2ShortType\":\"\",\"building2\":\"\",\"apartmentType\":\"\",\"apartmentShortType\":\"\",\"apartment\":\"\",\"litera\":\"\",\"literaType\":\"\",\"literaShortType\":\"\",\"room\":\"\",\"roomType\":\"\",\"roomShortType\":\"\",\"stead\":\"\",\"steadType\":\"\",\"steadShortType\":\"\",\"apartmentCheckbox\":true,\"apartmentCheckboxClosed\":true,\"index\":\"236040\",\"geoLat\":\"54.723257\",\"geoLon\":\"20.507945\",\"fullAddress\":\"236040, обл. Калининградская, г. Калининград, ул. Горького, д. 1\",\"addressStr\":\"обл. Калининградская, г. Калининград, ул. Горького\",\"lat\":\"54.723257\",\"lng\":\"20.507945\",\"kladrCode\":\"3900000100002130005\",\"fiasCode\":\"42a79fa8-0278-4932-969c-8115f4d65dc3\",\"regionFias\":\"90c7181e-724f-41b3-b6c6-bd3ec7ae3f30\",\"regionKladr\":\"3900000000000\",\"townFias\":\"\",\"townKladr\":\"\",\"streetFias\":\"eb2fa5a8-1887-453a-af08-82e00f5c2c65\",\"streetKladr\":\"39000001000021300\",\"houseFias\":\"42a79fa8-0278-4932-969c-8115f4d65dc3\",\"houseKladr\":\"3900000100002130005\",\"apartmentFias\":\"\",\"apartmentKladr\":\"\",\"okato\":\"27401368000\",\"oktmo\":\"27701000001\",\"hasErrors\":0,\"regionCode\":\"39\",\"postalCode\":\"\",\"oktmoName\":\"\",\"esiaAddressSrt\":\"\",\"esiaFullAddress\":\"\",\"isNormalizedAddress\":false},\"id\":\"9553852\",\"c108\":\"2\"}]"
+    },
+    "c3": {
+      "visited": true,
+      "value": "1"
+    },
+    "c4": {
+      "visited": true,
+      "value": "2"
+    },
+    "PersonalInfo": {
+      "visited": true,
+      "value": "{\"states\":[{\"groupName\":\"Петрова Ирина Ивановна\",\"fields\":[{\"label\":\"Дата рождения\",\"value\":\"01.11.2004\"},{\"label\":\"Место рождения\",\"value\":\"г. Калининград\"}]},{\"groupName\":\"Паспорт гражданина РФ\",\"fields\":[{\"label\":\"Серия и номер\",\"value\":\"1232 333232\"},{\"label\":\"Дата выдачи\",\"value\":\"01.09.2025\"},{\"label\":\"Кем выдан\",\"value\":\"УФМС по г. Калининград\"},{\"label\":\"Код подразделения\",\"value\":\"123-213\"},{\"label\":\"СНИЛС\",\"value\":\"000-123-321 50\"}]}],\"storedValues\":{\"firstName\":\"Ирина\",\"lastName\":\"Петрова\",\"middleName\":\"Ивановна\",\"birthDate\":\"01.11.2004\",\"birthPlace\":\"г. Калининград\",\"gender\":\"F\",\"genderFull\":\"Женский\",\"rfPasportSeries\":\"1232\",\"rfPasportNumber\":\"333232\",\"rfPasportIssueDate\":\"01.09.2025\",\"rfPasportIssuedBy\":\"УФМС по г. Калининград\",\"rfPasportIssuedById\":\"123213\",\"rfPasportIssuedByIdFormatted\":\"123-213\",\"citizenship\":\"РОССИЯ\",\"citizenshipCode\":\"RUS\",\"snils\":\"000-123-321 50\",\"docType\":\"RF_PASSPORT\"},\"errors\":[]}"
+    },
+    "c136": {
+      "visited": true
+    },
+    "c135": {
+      "visited": true,
+      "value": "{\"arguments\":{\"checkRegion3\":\"ok\"}}"
+    },
+    "c73": {
+      "visited": true
+    },
+    "c50": {
+      "visited": true,
+      "value": ""
+    },
+    "c54": {
+      "visited": true
+    },
+    "c18": {
+      "visited": true,
+      "value": "{\"series\":\"2351\",\"number\":\"452352\",\"date\":\"2025-10-01T00:00:00.000+02:00\",\"emitter\":\"УФМС\",\"issueId\":\"346-363\"}"
+    },
+    "c106": {
+      "visited": true,
+      "value": "2"
+    },
+    "c107": {
+      "visited": true,
+      "value": "{\"regionType\":\"область\",\"regionShortType\":\"обл\",\"region\":\"Калининградская\",\"cityType\":\"город\",\"cityShortType\":\"г\",\"city\":\"Калининград\",\"districtType\":\"\",\"districtShortType\":\"\",\"district\":\"\",\"townType\":\"\",\"townShortType\":\"\",\"town\":\"\",\"additionalTownType\":\"\",\"additionalTownShortType\":\"\",\"additionalTown\":\"\",\"inCityDistType\":\"\",\"inCityDistShortType\":\"\",\"inCityDist\":\"\",\"streetType\":\"улица\",\"streetShortType\":\"ул\",\"street\":\"Горького\",\"additionalAreaType\":\"\",\"additionalAreaShortType\":\"\",\"additionalArea\":\"\",\"additionalStreetType\":\"\",\"additionalStreetShortType\":\"\",\"additionalStreet\":\"\",\"houseType\":\"дом\",\"houseShortType\":\"д\",\"house\":\"1\",\"houseCheckbox\":false,\"houseCheckboxClosed\":false,\"building1Type\":\"\",\"building1ShortType\":\"\",\"building1\":\"\",\"building2Type\":\"\",\"building2ShortType\":\"\",\"building2\":\"\",\"apartmentType\":\"\",\"apartmentShortType\":\"\",\"apartment\":\"\",\"litera\":\"\",\"literaType\":\"\",\"literaShortType\":\"\",\"room\":\"\",\"roomType\":\"\",\"roomShortType\":\"\",\"stead\":\"\",\"steadType\":\"\",\"steadShortType\":\"\",\"apartmentCheckbox\":true,\"apartmentCheckboxClosed\":true,\"index\":\"236040\",\"geoLat\":\"54.723257\",\"geoLon\":\"20.507945\",\"fullAddress\":\"236040, обл. Калининградская, г. Калининград, ул. Горького, д. 1\",\"addressStr\":\"обл. Калининградская, г. Калининград, ул. Горького\",\"lat\":\"54.723257\",\"lng\":\"20.507945\",\"kladrCode\":\"3900000100002130005\",\"fiasCode\":\"42a79fa8-0278-4932-969c-8115f4d65dc3\",\"regionFias\":\"90c7181e-724f-41b3-b6c6-bd3ec7ae3f30\",\"regionKladr\":\"3900000000000\",\"townFias\":\"\",\"townKladr\":\"\",\"streetFias\":\"eb2fa5a8-1887-453a-af08-82e00f5c2c65\",\"streetKladr\":\"39000001000021300\",\"houseFias\":\"42a79fa8-0278-4932-969c-8115f4d65dc3\",\"houseKladr\":\"3900000100002130005\",\"apartmentFias\":\"\",\"apartmentKladr\":\"\",\"okato\":\"27401368000\",\"oktmo\":\"27701000001\",\"hasErrors\":0,\"regionCode\":\"39\",\"postalCode\":\"\",\"oktmoName\":\"\",\"esiaAddressSrt\":\"\",\"esiaFullAddress\":\"\",\"isNormalizedAddress\":false}"
+    },
+    "c74": {
+      "visited": true
+    },
+    "c55": {
+      "visited": true,
+      "value": "{\"id\":\"042748634\",\"text\":\"042748634 - КАЛИНИНГРАДСКОЕ ОТДЕЛЕНИЕ N8626 ПАО СБЕРБАНК г Калининград\",\"originalItem\":{\"value\":\"042748634\",\"title\":\"042748634 - КАЛИНИНГРАДСКОЕ ОТДЕЛЕНИЕ N8626 ПАО СБЕРБАНК г Калининград\",\"isLeaf\":true,\"children\":[],\"attributes\":[{\"name\":\"ID\",\"type\":\"STRING\",\"value\":{\"asString\":\"042748634\",\"typeOfValue\":\"STRING\",\"value\":\"042748634\"},\"valueAsOfType\":\"042748634\"},{\"name\":\"NAME\",\"type\":\"STRING\",\"value\":{\"asString\":\"КАЛИНИНГРАДСКОЕ ОТДЕЛЕНИЕ N8626 ПАО СБЕРБАНК г Калининград\",\"typeOfValue\":\"STRING\",\"value\":\"КАЛИНИНГРАДСКОЕ ОТДЕЛЕНИЕ N8626 ПАО СБЕРБАНК г Калининград\"},\"valueAsOfType\":\"КАЛИНИНГРАДСКОЕ ОТДЕЛЕНИЕ N8626 ПАО СБЕРБАНК г Калининград\"},{\"name\":\"BIC\",\"type\":\"STRING\",\"value\":{\"asString\":\"042748634\",\"typeOfValue\":\"STRING\",\"value\":\"042748634\"},\"valueAsOfType\":\"042748634\"},{\"name\":\"CORR_ACCOUNT\",\"type\":\"STRING\",\"value\":{\"asString\":\"30101810100000000634\",\"typeOfValue\":\"STRING\",\"value\":\"30101810100000000634\"},\"valueAsOfType\":\"30101810100000000634\"}],\"attributeValues\":{\"ID\":\"042748634\",\"CORR_ACCOUNT\":\"30101810100000000634\",\"BIC\":\"042748634\",\"NAME\":\"КАЛИНИНГРАДСКОЕ ОТДЕЛЕНИЕ N8626 ПАО СБЕРБАНК г Калининград\"}}}"
+    },
+    "c70": {
+      "visited": true
+    },
+    "c71": {
+      "visited": true,
+      "value": "false"
+    },
+    "c72": {
+      "visited": true,
+      "value": "32444444444444478978"
+    },
+    "c102": {
+      "visited": true
+    },
+    "c52": {
+      "visited": true
+    },
+    "c85": {
+      "visited": true
+    },
+    "c86": {
+      "visited": true
+    },
+    "c90": {
+      "visited": true
+    },
+    "c96": {
+      "visited": true
+    }
+  },
+  "cycledApplicantAnswers": {
+    "currentAnswerId": "c2",
+    "inCycle": false,
+    "answerlist": [
+      {
+        "id": "c2",
+        "initScreen": "es2_2800",
+        "currentItemId": "9553852",
+        "items": [
+          {
+            "id": "9524999",
+            "uniqueKeys": [],
+            "fieldToId": {
+              "lastName": "c6",
+              "firstName": "c7",
+              "gender": "c15",
+              "middleName": "c12",
+              "id": "c5",
+              "isNew": "c16",
+              "type": "c24",
+              "birthDate": "c13"
+            },
+            "itemAnswers": {
+              "c5": {
+                "visited": true,
+                "value": "9524999"
+              },
+              "c6": {
+                "visited": true,
+                "value": "Иванов"
+              },
+              "c7": {
+                "visited": true,
+                "value": "Иван"
+              },
+              "c13": {
+                "visited": true,
+                "value": "2017-04-25T00:00:00.000Z"
+              },
+              "c24": {
+                "visited": true,
+                "value": "RF_BRTH_CERT"
+              },
+              "c12": {
+                "visited": true,
+                "value": "Иванович"
+              },
+              "c15": {
+                "visited": true,
+                "value": "M"
+              },
+              "c16": {
+                "visited": true,
+                "value": "false"
+              },
+              "id": {
+                "visited": true,
+                "value": "9524999"
+              },
+              "c108": {
+                "visited": true,
+                "value": "1"
+              },
+              "sc42_2800": {
+                "visited": true,
+                "value": "{\"states\":[{\"groupName\":\"Иванов Иван Иванович\",\"fields\":[{\"label\":\"Дата рождения\",\"value\":\"25.04.2017\"},{\"label\":\"СНИЛС\",\"value\":\"015-345-455 27\"}]},{\"groupName\":\"Свидетельство о рождении\",\"fields\":[{\"label\":\"Серия и номер\",\"value\":\"I-РО 3434343\"},{\"label\":\"Актовая запись\",\"value\":\"3434343434\"},{\"label\":\"Дата выдачи\",\"value\":\"25.04.2017\"},{\"label\":\"Кем выдан\",\"value\":\"кпкапк\"},{\"label\":\"Дата актовой записи\",\"value\":\"25.04.2017\"}]}],\"storedValues\":{\"firstName\":\"Иван\",\"middleName\":\"Иванович\",\"lastName\":\"Иванов\",\"birthDate\":\"25.04.2017\",\"snils\":\"015-345-455 27\",\"rfBirthCertificateSeries\":\"I-РО\",\"rfBirthCertificateNumber\":\"3434343\",\"rfBirthCertificateActNumber\":\"3434343434\",\"rfBirthCertificateIssueDate\":\"25.04.2017\",\"rfBirthCertificateIssuedBy\":\"кпкапк\",\"actDate\":\"25.04.2017\",\"docType\":\"RF_BRTH_CERT\"},\"errors\":[]}"
+              },
+              "ariaLabel": {
+                "visited": true,
+                "value": "Иван 8 лет"
+              }
+            },
+            "cachedAnswers": {},
+            "esiaData": {
+              "lastName": "Иванов",
+              "rfBirthCertificateIssueDate": "2017-04-25T00:00:00.000Z",
+              "gender": "M",
+              "regDate": "",
+              "isNew": false,
+              "relationshipToChild": "",
+              "type": "RF_BRTH_CERT",
+              "birthDate": "2017-04-25T00:00:00.000Z",
+              "actDate": "25.04.2017",
+              "regAddr": "",
+              "firstName": "Иван",
+              "rfBirthCertificateIssuedBy": "кпкапк",
+              "rfBirthCertificateSeries": "I-РО",
+              "trusted": false,
+              "middleName": "Иванович",
+              "id": "9524999",
+              "rfBirthCertificateNumber": "3434343",
+              "snils": "015-345-455 27",
+              "rfBirthCertificateActNumber": "3434343434"
+            },
+            "finishedScreens": [
+              "es12_2800",
+              "s45"
+            ],
+            "itemCounter": 1,
+            "index": 0
+          },
+          {
+            "id": "9520407",
+            "uniqueKeys": [],
+            "fieldToId": {
+              "lastName": "c6",
+              "firstName": "c7",
+              "gender": "c15",
+              "middleName": "c12",
+              "id": "c5",
+              "isNew": "c16",
+              "type": "c24",
+              "birthDate": "c13"
+            },
+            "itemAnswers": {
+              "c5": {
+                "visited": true,
+                "value": "9520407"
+              },
+              "c6": {
+                "visited": true,
+                "value": "Иванова"
+              },
+              "c7": {
+                "visited": true,
+                "value": "Мария"
+              },
+              "c13": {
+                "visited": true,
+                "value": "2012-05-05T00:00:00.000Z"
+              },
+              "c24": {
+                "visited": true,
+                "value": "RF_BRTH_CERT"
+              },
+              "c12": {
+                "visited": true,
+                "value": "Олеговна"
+              },
+              "c15": {
+                "visited": true,
+                "value": "F"
+              },
+              "c16": {
+                "visited": true,
+                "value": "false"
+              },
+              "id": {
+                "visited": true,
+                "value": "9520407"
+              },
+              "c108": {
+                "visited": true,
+                "value": "1"
+              },
+              "sc42_2800": {
+                "visited": true,
+                "value": "{\"states\":[{\"groupName\":\"Иванова Мария Олеговна\",\"fields\":[{\"label\":\"Дата рождения\",\"value\":\"05.05.2012\"},{\"label\":\"СНИЛС\",\"value\":\"015-345-455 27\"}]},{\"groupName\":\"Свидетельство о рождении\",\"fields\":[{\"label\":\"Серия и номер\",\"value\":\"IV-АА 6569898\"},{\"label\":\"Актовая запись\",\"value\":\"6898565656\"},{\"label\":\"Дата выдачи\",\"value\":\"05.05.2012\"},{\"label\":\"Кем выдан\",\"value\":\"Калининград\"},{\"label\":\"Дата актовой записи\",\"value\":\"05.05.2012\"}]}],\"storedValues\":{\"firstName\":\"Мария\",\"middleName\":\"Олеговна\",\"lastName\":\"Иванова\",\"birthDate\":\"05.05.2012\",\"snils\":\"015-345-455 27\",\"rfBirthCertificateSeries\":\"IV-АА\",\"rfBirthCertificateNumber\":\"6569898\",\"rfBirthCertificateActNumber\":\"6898565656\",\"rfBirthCertificateIssueDate\":\"05.05.2012\",\"rfBirthCertificateIssuedBy\":\"Калининград\",\"actDate\":\"05.05.2012\",\"docType\":\"RF_BRTH_CERT\"},\"errors\":[]}"
+              },
+              "ariaLabel": {
+                "visited": true,
+                "value": "Мария 13 лет"
+              }
+            },
+            "cachedAnswers": {},
+            "esiaData": {
+              "lastName": "Иванова",
+              "rfBirthCertificateIssueDate": "2012-05-05T00:00:00.000Z",
+              "gender": "F",
+              "regDate": "",
+              "isNew": false,
+              "relationshipToChild": "",
+              "type": "RF_BRTH_CERT",
+              "birthDate": "2012-05-05T00:00:00.000Z",
+              "actDate": "05.05.2012",
+              "regAddr": "",
+              "firstName": "Мария",
+              "rfBirthCertificateIssuedBy": "Калининград",
+              "rfBirthCertificateSeries": "IV-АА",
+              "trusted": false,
+              "middleName": "Олеговна",
+              "id": "9520407",
+              "rfBirthCertificateNumber": "6569898",
+              "snils": "015-345-455 27",
+              "rfBirthCertificateActNumber": "6898565656"
+            },
+            "finishedScreens": [
+              "es12_2800",
+              "s45"
+            ],
+            "itemCounter": 2,
+            "index": 1
+          },
+          {
+            "id": "9553852",
+            "uniqueKeys": [],
+            "fieldToId": {
+              "lastName": "c6",
+              "firstName": "c7",
+              "gender": "c15",
+              "middleName": "c12",
+              "id": "c5",
+              "isNew": "c16",
+              "type": "c24",
+              "birthDate": "c13"
+            },
+            "itemAnswers": {
+              "c13": {
+                "visited": true,
+                "value": "2008-01-01T00:00:00.000Z"
+              },
+              "c24": {
+                "visited": true,
+                "value": "RF_BRTH_CERT"
+              },
+              "c12": {
+                "visited": true,
+                "value": "Петрович"
+              },
+              "c15": {
+                "visited": true,
+                "value": "M"
+              },
+              "c16": {
+                "visited": true,
+                "value": "false"
+              },
+              "sc42_2800": {
+                "visited": true,
+                "value": "{\"states\":[{\"groupName\":\"Петров Петр Петрович\",\"fields\":[{\"label\":\"Дата рождения\",\"value\":\"01.01.2008\"},{\"label\":\"СНИЛС\",\"value\":\"775-592-099 62\"}]},{\"groupName\":\"Свидетельство о рождении\",\"fields\":[{\"label\":\"Серия и номер\",\"value\":\"IV-АА 111111\"},{\"label\":\"Актовая запись\",\"value\":\"111111\"},{\"label\":\"Дата выдачи\",\"value\":\"01.01.2008\"},{\"label\":\"Кем выдан\",\"value\":\"г. Калининград\"},{\"label\":\"Дата актовой записи\",\"value\":\"01.01.2008\"}]}],\"storedValues\":{\"firstName\":\"Петр\",\"middleName\":\"Петрович\",\"lastName\":\"Петров\",\"birthDate\":\"01.01.2008\",\"snils\":\"775-592-099 62\",\"rfBirthCertificateSeries\":\"IV-АА\",\"rfBirthCertificateNumber\":\"111111\",\"rfBirthCertificateActNumber\":\"111111\",\"rfBirthCertificateIssueDate\":\"01.01.2008\",\"rfBirthCertificateIssuedBy\":\"г. Калининград\",\"actDate\":\"01.01.2008\",\"docType\":\"RF_BRTH_CERT\"},\"errors\":[]}"
+              },
+              "ariaLabel": {
+                "visited": true,
+                "value": "Петр 17 лет"
+              },
+              "c5": {
+                "visited": true,
+                "value": "9553852"
+              },
+              "c6": {
+                "visited": true,
+                "value": "Петров"
+              },
+              "c7": {
+                "visited": true,
+                "value": "Петр"
+              },
+              "c109": {
+                "visited": true,
+                "value": "{\"regionType\":\"область\",\"regionShortType\":\"обл\",\"region\":\"Калининградская\",\"cityType\":\"город\",\"cityShortType\":\"г\",\"city\":\"Калининград\",\"districtType\":\"\",\"districtShortType\":\"\",\"district\":\"\",\"townType\":\"\",\"townShortType\":\"\",\"town\":\"\",\"additionalTownType\":\"\",\"additionalTownShortType\":\"\",\"additionalTown\":\"\",\"inCityDistType\":\"\",\"inCityDistShortType\":\"\",\"inCityDist\":\"\",\"streetType\":\"улица\",\"streetShortType\":\"ул\",\"street\":\"Горького\",\"additionalAreaType\":\"\",\"additionalAreaShortType\":\"\",\"additionalArea\":\"\",\"additionalStreetType\":\"\",\"additionalStreetShortType\":\"\",\"additionalStreet\":\"\",\"houseType\":\"дом\",\"houseShortType\":\"д\",\"house\":\"1\",\"houseCheckbox\":false,\"houseCheckboxClosed\":false,\"building1Type\":\"\",\"building1ShortType\":\"\",\"building1\":\"\",\"building2Type\":\"\",\"building2ShortType\":\"\",\"building2\":\"\",\"apartmentType\":\"\",\"apartmentShortType\":\"\",\"apartment\":\"\",\"litera\":\"\",\"literaType\":\"\",\"literaShortType\":\"\",\"room\":\"\",\"roomType\":\"\",\"roomShortType\":\"\",\"stead\":\"\",\"steadType\":\"\",\"steadShortType\":\"\",\"apartmentCheckbox\":true,\"apartmentCheckboxClosed\":true,\"index\":\"236040\",\"geoLat\":\"54.723257\",\"geoLon\":\"20.507945\",\"fullAddress\":\"236040, обл. Калининградская, г. Калининград, ул. Горького, д. 1\",\"addressStr\":\"обл. Калининградская, г. Калининград, ул. Горького\",\"lat\":\"54.723257\",\"lng\":\"20.507945\",\"kladrCode\":\"3900000100002130005\",\"fiasCode\":\"42a79fa8-0278-4932-969c-8115f4d65dc3\",\"regionFias\":\"90c7181e-724f-41b3-b6c6-bd3ec7ae3f30\",\"regionKladr\":\"3900000000000\",\"townFias\":\"\",\"townKladr\":\"\",\"streetFias\":\"eb2fa5a8-1887-453a-af08-82e00f5c2c65\",\"streetKladr\":\"39000001000021300\",\"houseFias\":\"42a79fa8-0278-4932-969c-8115f4d65dc3\",\"houseKladr\":\"3900000100002130005\",\"apartmentFias\":\"\",\"apartmentKladr\":\"\",\"okato\":\"27401368000\",\"oktmo\":\"27701000001\",\"hasErrors\":0,\"regionCode\":\"39\",\"postalCode\":\"\",\"oktmoName\":\"\",\"esiaAddressSrt\":\"\",\"esiaFullAddress\":\"\",\"isNormalizedAddress\":false}"
+              },
+              "id": {
+                "visited": true,
+                "value": "9553852"
+              },
+              "c108": {
+                "visited": true,
+                "value": "2"
+              }
+            },
+            "cachedAnswers": {},
+            "esiaData": {
+              "lastName": "Петров",
+              "rfBirthCertificateIssueDate": "2008-01-01T00:00:00.000Z",
+              "gender": "M",
+              "regDate": "",
+              "isNew": false,
+              "relationshipToChild": "",
+              "type": "RF_BRTH_CERT",
+              "birthDate": "2008-01-01T00:00:00.000Z",
+              "actDate": "01.01.2008",
+              "regAddr": "",
+              "firstName": "Петр",
+              "rfBirthCertificateIssuedBy": "г. Калининград",
+              "rfBirthCertificateSeries": "IV-АА",
+              "trusted": false,
+              "middleName": "Петрович",
+              "id": "9553852",
+              "rfBirthCertificateNumber": "111111",
+              "snils": "775-592-099 62",
+              "rfBirthCertificateActNumber": "111111"
+            },
+            "finishedScreens": [
+              "es12_2800",
+              "s45",
+              "s53"
+            ],
+            "itemCounter": 3,
+            "index": 2
+          }
+        ]
+      }
+    ]
+  },
+  "participants": {},
+  "display": {
+    "id": "s51",
+    "name": "s17 - Выбор ТО",
+    "type": "CUSTOM",
+    "header": "Выберите территориальное отделение",
+    "components": [
+      {
+        "id": "c40",
+        "type": "Lookup",
+        "skipValidation": false,
+        "attrs": {
+          "isPullMode": false,
+          "vkuValidationSwitchOn": true,
+          "disabled": false,
+          "searchIconForcedShowing": false,
+          "focusOnInitAndStartSearch": false,
+          "isClearable": true,
+          "mappingParams": {
+            "isRoot": true,
+            "idPath": "attributeValues.CODE",
+            "textPath": "attributeValues.SHORT_NAME"
+          },
+          "dictionaryOptions": {
+            "pageNum": 1
+          },
+          "vkuProvider": false,
+          "showExpandCollapse": false,
+          "validationSwitchOn": "true",
+          "vkuFilterType": "no",
+          "vkuPreset": "no",
+          "testReadOnly": "no",
+          "dictionaryType": "CSZN_KLD_2700",
+          "refs": {}
+        },
+        "arguments": {},
+        "value": "",
+        "required": true,
+        "sendAnalytics": false
+      },
+      {
+        "id": "c97",
+        "type": "LabelSection",
+        "skipValidation": false,
+        "attrs": {
+          "isBottomSlot": false,
+          "interpolationEnabled": true,
+          "ref": [
+            {
+              "relatedRel": "c40",
+              "val": "*",
+              "relation": "displayOn"
+            },
+            {
+              "relatedRel": "c40",
+              "val": "*",
+              "relation": "autoFillTextFromRefs",
+              "relatedRelValues": {
+                "NAME": "originalItem.attributeValues.NAME",
+                "ADDRESS": "originalItem.attributeValues.ADDRESS",
+                "TELEFON": "originalItem.attributeValues.TELEFON"
+              }
+            }
+          ],
+          "refs": {}
+        },
+        "arguments": {},
+        "value": "",
+        "required": true,
+        "sendAnalytics": false
+      }
+    ],
+    "buttons": [
+      {
+        "id": "s51-0",
+        "label": "Отправить заявление",
+        "type": "nextStep",
+        "action": "getNextScreen",
+        "color": "gosblue",
+        "height": ""
+      }
+    ],
+    "hideBackButton": false,
+    "infoComponents": [],
+    "logicAfterValidationComponents": [],
+    "notSendToSp": false,
+    "forceSendToSuggestions": false,
+    "needToUpdateAdditionalParameters": false,
+    "forceDeliriumCall": false,
+    "checkSendPermission": false,
+    "arguments": {},
+    "acceptCookies": [],
+    "accepted": true,
+    "terminal": false,
+    "impasse": false,
+    "firstScreen": false
+  },
+  "logicComponents": [],
+  "serviceInfo": {
+    "department": {
+      "id": "3900000010000000044",
+      "title": "Министерство социальной политики Калининградской области"
+    },
+    "error": "Region not found",
+    "userRegion": {
+      "name": "Калининградская область",
+      "path": "Калининградская область",
+      "codes": [
+        "27000000000"
+      ],
+      "lastRegionCode": "27000000000"
+    },
+    "statusId": 0,
+    "orderType": "ORDER",
+    "queryParams": {},
+    "formId": "form",
+    "proactivityCreated": false,
+    "cookies": {},
+    "deviceType": "desk",
+    "owner": "SF",
+    "agencyNotLegal": false,
+    "userRegionCode": "27000000000",
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 YaBrowser/25.8.0.0 Safari/537.36"
+  },
+  "signInfoMap": {},
+  "attachmentInfo": {},
+  "additionalParameters": {},
+  "serviceParameters": {
+    "empowerment": ""
+  },
+  "generatedFiles": [],
+  "disclaimers": [],
+  "fileGenerateActions": [],
+  "draftVersion": "1",
+  "descriptorOwner": "SF",
+  "cycledApplicantAnswerContext": {
+    "cycledApplicantAnswerItem": {
+      "id": "9553852",
+      "uniqueKeys": [],
+      "fieldToId": {
+        "lastName": "c6",
+        "firstName": "c7",
+        "gender": "c15",
+        "middleName": "c12",
+        "id": "c5",
+        "isNew": "c16",
+        "type": "c24",
+        "birthDate": "c13"
+      },
+      "itemAnswers": {
+        "c13": {
+          "visited": true,
+          "value": "2008-01-01T00:00:00.000Z"
+        },
+        "c24": {
+          "visited": true,
+          "value": "RF_BRTH_CERT"
+        },
+        "c12": {
+          "visited": true,
+          "value": "Петрович"
+        },
+        "c15": {
+          "visited": true,
+          "value": "M"
+        },
+        "c16": {
+          "visited": true,
+          "value": "false"
+        },
+        "sc42_2800": {
+          "visited": true,
+          "value": "{\"states\":[{\"groupName\":\"Петров Петр Петрович\",\"fields\":[{\"label\":\"Дата рождения\",\"value\":\"01.01.2008\"},{\"label\":\"СНИЛС\",\"value\":\"775-592-099 62\"}]},{\"groupName\":\"Свидетельство о рождении\",\"fields\":[{\"label\":\"Серия и номер\",\"value\":\"IV-АА 111111\"},{\"label\":\"Актовая запись\",\"value\":\"111111\"},{\"label\":\"Дата выдачи\",\"value\":\"01.01.2008\"},{\"label\":\"Кем выдан\",\"value\":\"г. Калининград\"},{\"label\":\"Дата актовой записи\",\"value\":\"01.01.2008\"}]}],\"storedValues\":{\"firstName\":\"Петр\",\"middleName\":\"Петрович\",\"lastName\":\"Петров\",\"birthDate\":\"01.01.2008\",\"snils\":\"775-592-099 62\",\"rfBirthCertificateSeries\":\"IV-АА\",\"rfBirthCertificateNumber\":\"111111\",\"rfBirthCertificateActNumber\":\"111111\",\"rfBirthCertificateIssueDate\":\"01.01.2008\",\"rfBirthCertificateIssuedBy\":\"г. Калининград\",\"actDate\":\"01.01.2008\",\"docType\":\"RF_BRTH_CERT\"},\"errors\":[]}"
+        },
+        "ariaLabel": {
+          "visited": true,
+          "value": "Петр 17 лет"
+        },
+        "c5": {
+          "visited": true,
+          "value": "9553852"
+        },
+        "c6": {
+          "visited": true,
+          "value": "Петров"
+        },
+        "c7": {
+          "visited": true,
+          "value": "Петр"
+        },
+        "c109": {
+          "visited": true,
+          "value": "{\"regionType\":\"область\",\"regionShortType\":\"обл\",\"region\":\"Калининградская\",\"cityType\":\"город\",\"cityShortType\":\"г\",\"city\":\"Калининград\",\"districtType\":\"\",\"districtShortType\":\"\",\"district\":\"\",\"townType\":\"\",\"townShortType\":\"\",\"town\":\"\",\"additionalTownType\":\"\",\"additionalTownShortType\":\"\",\"additionalTown\":\"\",\"inCityDistType\":\"\",\"inCityDistShortType\":\"\",\"inCityDist\":\"\",\"streetType\":\"улица\",\"streetShortType\":\"ул\",\"street\":\"Горького\",\"additionalAreaType\":\"\",\"additionalAreaShortType\":\"\",\"additionalArea\":\"\",\"additionalStreetType\":\"\",\"additionalStreetShortType\":\"\",\"additionalStreet\":\"\",\"houseType\":\"дом\",\"houseShortType\":\"д\",\"house\":\"1\",\"houseCheckbox\":false,\"houseCheckboxClosed\":false,\"building1Type\":\"\",\"building1ShortType\":\"\",\"building1\":\"\",\"building2Type\":\"\",\"building2ShortType\":\"\",\"building2\":\"\",\"apartmentType\":\"\",\"apartmentShortType\":\"\",\"apartment\":\"\",\"litera\":\"\",\"literaType\":\"\",\"literaShortType\":\"\",\"room\":\"\",\"roomType\":\"\",\"roomShortType\":\"\",\"stead\":\"\",\"steadType\":\"\",\"steadShortType\":\"\",\"apartmentCheckbox\":true,\"apartmentCheckboxClosed\":true,\"index\":\"236040\",\"geoLat\":\"54.723257\",\"geoLon\":\"20.507945\",\"fullAddress\":\"236040, обл. Калининградская, г. Калининград, ул. Горького, д. 1\",\"addressStr\":\"обл. Калининградская, г. Калининград, ул. Горького\",\"lat\":\"54.723257\",\"lng\":\"20.507945\",\"kladrCode\":\"3900000100002130005\",\"fiasCode\":\"42a79fa8-0278-4932-969c-8115f4d65dc3\",\"regionFias\":\"90c7181e-724f-41b3-b6c6-bd3ec7ae3f30\",\"regionKladr\":\"3900000000000\",\"townFias\":\"\",\"townKladr\":\"\",\"streetFias\":\"eb2fa5a8-1887-453a-af08-82e00f5c2c65\",\"streetKladr\":\"39000001000021300\",\"houseFias\":\"42a79fa8-0278-4932-969c-8115f4d65dc3\",\"houseKladr\":\"3900000100002130005\",\"apartmentFias\":\"\",\"apartmentKladr\":\"\",\"okato\":\"27401368000\",\"oktmo\":\"27701000001\",\"hasErrors\":0,\"regionCode\":\"39\",\"postalCode\":\"\",\"oktmoName\":\"\",\"esiaAddressSrt\":\"\",\"esiaFullAddress\":\"\",\"isNormalizedAddress\":false}"
+        },
+        "id": {
+          "visited": true,
+          "value": "9553852"
+        },
+        "c108": {
+          "visited": true,
+          "value": "2"
+        }
+      },
+      "cachedAnswers": {},
+      "esiaData": {
+        "lastName": "Петров",
+        "rfBirthCertificateIssueDate": "2008-01-01T00:00:00.000Z",
+        "gender": "M",
+        "regDate": "",
+        "isNew": false,
+        "relationshipToChild": "",
+        "type": "RF_BRTH_CERT",
+        "birthDate": "2008-01-01T00:00:00.000Z",
+        "actDate": "01.01.2008",
+        "regAddr": "",
+        "firstName": "Петр",
+        "rfBirthCertificateIssuedBy": "г. Калининград",
+        "rfBirthCertificateSeries": "IV-АА",
+        "trusted": false,
+        "middleName": "Петрович",
+        "id": "9553852",
+        "rfBirthCertificateNumber": "111111",
+        "snils": "775-592-099 62",
+        "rfBirthCertificateActNumber": "111111"
+      },
+      "finishedScreens": [
+        "es12_2800",
+        "s45",
+        "s53"
+      ],
+      "itemCounter": 3,
+      "index": 2
+    }
+  },
+  "gender": "F"
+}

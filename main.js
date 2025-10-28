@@ -1,13 +1,12 @@
-const { app, BrowserWindow, ipcMain } = require('electron');
+const { app, BrowserWindow, ipcMain,dialog } = require('electron');
 const path = require('path');
 const fs = require('fs');
 const X2JS = require('x2js');
-
 // Утилиты
 const x2js = new X2JS();
 
 // Функция генерации VM-шаблона из схем
-function generateVMFromSchemas(jsonSchema, xsdSchema, params = {}) {
+async function generateVMFromSchemas(jsonSchema, xsdSchema, params = {}) {
     const defaultParams = {
         prefix: "soc:",
         handleNullValues: "omit",
@@ -201,12 +200,8 @@ function generateVMFromSchemas(jsonSchema, xsdSchema, params = {}) {
 
     const vmLines = [];
 
-    function generateField(parentVar, schema, complexType, indent = "") {
+    async function generateField(parentVar, schema, complexType, indent = "") {
         let props = null;
-
-        // Логируем входящую схему для отладки.
-        console.log("Incoming schema:", schema);
-
         // Обработка $ref на корневом уровне схемы
         if (schema.$ref) {
             const refName = String(schema.$ref).split('/').pop();
@@ -220,7 +215,6 @@ function generateVMFromSchemas(jsonSchema, xsdSchema, params = {}) {
                 return;
             }
         }
-
         if (Array.isArray(schema)) {
             console.log("Schema is an array of components");
             props = {};
@@ -232,9 +226,9 @@ function generateVMFromSchemas(jsonSchema, xsdSchema, params = {}) {
             });
             console.log("Props (from array of components):", props);
 
-        } else if (schema.properties && typeof schema.properties === 'object') {
+        } else if (schema.screens) {
 
-            props = schema.properties;
+            props = schema.screens;
             console.log("Props (from schema.properties):", props); 
         }
         else if (schema && schema.type === 'object' && !schema.properties && jsonSchema.definitions) {
@@ -255,7 +249,6 @@ function generateVMFromSchemas(jsonSchema, xsdSchema, params = {}) {
             console.warn(`Свойства не найдены для схемы ${schema}`);
             return;
         }
-
         Object.keys(props).forEach(key => {
             const prop = props[key];
             const xmlFieldInfo = getTypeOfField(complexType, key);
@@ -276,10 +269,10 @@ function generateVMFromSchemas(jsonSchema, xsdSchema, params = {}) {
                 vmLines.push(`${indent}<${prefix}${vmName}>`);
                 vmLines.push(`${indent}  #foreach($item in $!{${parentVar}.${key}})`); 
                 if (prop.type === "object") {
-                    const innerType = typeDefinitions[typeName]; // Получаем определение типа элемента из XSD
+                    const innerType = typeDefinitions[typeName]; 
 
                     vmLines.push(`${indent}    <${listElementName}>`);
-                    generateField("item", prop, innerType, indent + "    "); // Рекурсивно генерируем поля для элемента списка
+                    generateField("item", prop, innerType, indent + "    ");
                     vmLines.push(`${indent}    </${listElementName}>`);
                 } else {
                     vmLines.push(`${indent}    <${listElementName}>${`$!{esc.xml($item)}`}</${listElementName}>`); // Генерируем простой элемент списка
@@ -324,7 +317,7 @@ function generateVMFromSchemas(jsonSchema, xsdSchema, params = {}) {
     generateField("root", jsonSchema, rootComplexType);
 
     vmLines.push('</Data>');
-
+    console.log(vmLines);
     return vmLines.join('\n');
 }
 
@@ -354,25 +347,51 @@ app.whenReady().then(() => {
 app.on('window-all-closed', () => {
     if (process.platform !== 'darwin') app.quit();
 });
-async function readFileAsync(filePath) {
-  try {
-    const data = await fs.readFile(filePath, 'utf-8');
-    return data;
-  } catch (err) {
-    console.error("Ошибка при чтении файла:", err);
-    throw err;
-  }
-}
 
 ipcMain.handle('create-vm-template', async (event, _, data, params) => {
     try {
-        const { jsonSchema, xsdSchema } = data;
+        const { projectName,jsonSchema, xsdSchema } = data;
         const vmCode = generateVMFromSchemas(jsonSchema, xsdSchema, params);
-        const templatePath = path.join(__dirname, 'template.vm');
-        const tpl = await fs.promises.readFile(templatePath, 'utf8');
-        return tpl;
+        const templatePath = path.join(__dirname, "template.vm");
+        const tm=await fs.promises.readFile(templatePath,'utf-8');
+        fs.writeFileSync("projects/"+projectName, tm, { flag: 'a' })
+        return tm;
+        return vmCode;
     } catch (err) {
         console.error('Ошибка генерации VM-шаблона:', err);
         throw new Error(`Генерация не удалась: ${err.message}`);
     }
+});
+ipcMain.handle('save-file', async (event, content) => {
+  try {
+    const { canceled, filePath } = await dialog.showSaveDialog({
+      title: 'Сохранить VM-шаблон',
+      defaultPath: 'template.vm',
+      filters: [{ name: 'VM Template', extensions: ['vm', 'txt'] }]
+    });
+
+
+if (canceled) return { canceled: true };
+
+await fs.promises.writeFile(filePath, content, 'utf8');
+return { success: true, filePath };
+
+} catch (err) {
+    console.error('Error saving file:', err);
+    return { success: false, error: err.message || String(err) };
+  }
+});
+ipcMain.handle('getProject', async (event, content) => {
+    let arr=[];
+    fs.readdirSync("projects/").forEach(filename => {
+        const filePath = path.join("projects/", filename);
+        try {
+            const fileContent = fs.readFileSync(filePath, 'utf-8');
+            arr.push({ name: filename, content: fileContent });
+        } catch (error) {
+            console.error(`Ошибка при чтении файла ${filename}:`, error);
+            arr.push({name: filename, error: `Ошибка чтения: ${error.message}`});
+        }
+    });
+    return arr;
 });
