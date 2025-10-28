@@ -1,297 +1,284 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <title>Генератор VM-шаблонов</title>
-    <style>
-        body { max-width: 900px; margin: auto; padding: 20px; font-family: sans-serif; }
-        input[type="text"], input[type="file"] { width: 100%; padding: 6px; font-size: 1rem; margin-bottom: 10px; }
-        button { padding: 8px 15px; font-size: 1rem; margin-bottom: 15px; cursor: pointer; }
-        pre { white-space: pre-wrap; background: #f5f5f5; padding: 10px; border-radius: 5px; border: 1px solid #ddd; max-height: 400px; overflow: auto; font-family: monospace; }
-        .params-container { border: 1px solid #ccc; padding: 10px; margin-bottom: 10px; }
-        .param-row { display: flex; justify-content: space-between; margin-bottom: 5px; }
-        .param-row label { width: 40%; }
-        .param-row input { width: 55%; }
-    </style>
+  <meta charset="UTF-8" />
+  <title>Генератор VM-шаблонов</title>
+  <style>
+    body { 
+      font-family: 'Inter', sans-serif; margin: 0; padding: 10px; background: #FFFFFF;
+      display: flex;
+   }
+    .elems{
+      width: 25%;
+      margin-top: 48px;
+      padding: 40px 8px 8px 28px;
+      border-bottom: 1px solid #2563EB;
+      border-left: 1px solid #2563EB;
+      border-top: 1px solid #2563EB;
+      border-bottom-left-radius: 12px;
+      border-top-left-radius: 12px;
+    }
+    .container {
+      border: 1px solid #2563EB;
+      width: 80%;
+      margin-top: 48px;
+      padding: 0px 48px 48px 48px;
+      border-bottom-right-radius: 12px;
+      border-top-right-radius: 12px;
+    }
+    h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #1E293B;
+      text-align: center;
+      margin-bottom: 32px; /* Increased spacing */
+    }
 
+    .input-group {
+      margin-bottom: 24px; /* Increased spacing */
+    }
+
+    label {
+      display: block;
+      font-size: 1rem;
+      font-weight: 500;
+      color: #334155;
+      margin-bottom: 8px;
+    }
+
+    input[type="text"],
+    .custom-file-upload {
+    border: 1px solid #2563EB;
+    height: 40px;
+    width: 280px;
+      padding: 12px;
+      border-radius: 6px;
+      font-size: 1rem;
+      color: #4B5563;
+      outline: none;
+    }
+    input[type="file"] {
+  display: none;
+}
+
+.custom-file-upload {
+  cursor: pointer;
+}
+article{
+  display: flex;
+  align-items: center;
+}
+img{
+  margin-right: 20px;
+  width:50px;
+  height:50px;
+}
+
+    input[type="text"]:focus,
+    input[type="file"]:focus {
+      border-color: #ebd425;
+      box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
+    }
+
+    input[type="file"] {
+      margin-top: 4px;
+    }
+
+    button {
+      padding: 14px 24px;
+      margin-left: 80%;
+      background: #2563EB;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 1rem;
+      font-weight: 600;
+      transition: background-color 0.2s ease;
+    }
+
+    button:disabled {
+      background: #9CA3AF;
+      cursor: not-allowed;
+    }
+
+    button:hover:not(:disabled) {
+      background: #1E40AF;
+    }
+
+    pre {
+      background: #F3F4F6;
+      padding: 24px;
+      border-radius: 6px;
+      display: none;
+      overflow-x: auto;
+      white-space: pre;
+      font-size: 0.875rem;
+      color: #374151;
+      line-height: 1.5;
+    }
+
+    /* Стиль для обязательных полей */
+    .required-field:after {
+      content: "*";
+      color: red;
+      margin-left: 4px;
+    }
+
+    /* Дополнительные стили для улучшения внешнего вида */
+    .input-group:last-child {
+      margin-bottom: 0;
+    }
+
+
+      /* Добавляем отступы между инпутами */
+    .input-group > label {
+      margin-bottom: 8px; /* Adds spacing between labels and inputs */
+    }
+
+
+  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-
-<h2>Генератор VM-шаблонов</h2>
-
-<label>Название проекта</label>
-<input type="text" id="projectName" placeholder="Введите название"/>
-
-<label>JSON-схема (schema.json)</label>
-<input type="file" id="jsonSchemaInput" accept=".json"/>
-
-<label>XSD (schema.xsd)</label>
-<input type="file" id="xsdSchemaInput" accept=".xsd,.xml"/>
-
-<label>Тестовые JSON (тестовые JSON-файлы)</label>
-<input type="file" id="testJsonsInput" accept=".json" multiple/>
-
-<div class="params-container" style="display: none;">
-    <h3>Настройки параметров</h3>
-    <div class="param-row">
-        <label for="prefix">Префикс:</label>
-        <input type="text" id="prefix" value="soc:">
+    <div class="elems">
+        <article>
+            <img src="Rocket_Unselected.png" alt="">
+                        <p>Создать Услугу</p>
+        </article>
+        <article>
+            <img src="Folder_Unselected.png" alt="">
+                        <p>Мои проекты</p>
+        </article>
+        <article>
+            <img src="View_Unselected.png" alt="">
+                        <p>Инструкции</p>
+        </article>
     </div>
-    <div class="param-row">
-        <label for="handleNullValues">Обработка Null:</label>
-        <select id="handleNullValues">
-            <option value="omit">Опустить</option>
-            <option value="default">По умолчанию</option>
-        </select>
-    </div>
-    <div class="param-row">
-        <label for="dateFormat">Формат даты:</label>
-        <input type="text" id="dateFormat" value="yyyy-MM-dd">
-    </div>
+  <div class="container">
+    <h1>Прикрепите файлы</h1>
+    <ul>
+    <li class="input-group">
+      <label for="projectNameInput" class="required-field">Название проекта:</label>
+      <input type="text" id="projectNameInput" placeholder="Введите название" />
+    </li>
 
-    <div class="param-row">
-        <label for="transformFieldNames">Преобразование имен полей:</label>
-        <select id="transformFieldNames">
-            <option value="pascalCase">PascalCase</option>
-            <option value="camelCase">camelCase</option>
-            <option value="none">Без изменений</option>
-        </select>
-    </div>
+    <li class="input-group">
+        <label for="jsonSchemaInput" class="required-field">JSON-схема услуги</label>
+      <label for="jsonSchemaInput" class="custom-file-upload">загрузить файл</label>
+      <input type="file" id="jsonSchemaInput" accept=".json" />
+    </li>
 
-    <div class="param-row">
-        <label for="generateConditionals">Генерировать условия:</label>
-        <select id="generateConditionals">
-            <option value="true">Да</option>
-            <option value="false">Нет</option>
-        </select>
-    </div>
-
-    <div class="param-row">
-        <label for="listElementName">Имя элемента списка:</label>
-        <input type="text" id="listElementName" value="Child">
-    </div>
-
-    <div class="param-row">
-        <label for="validateData">Валидировать данные:</label>
-        <select id="validateData">
-            <option value="false">Нет</option>
-            <option value="true">Да</option>
-        </select>
-    </div>
-
-    <div class="param-row">
-        <label for="parseJsonStrings">Парсить JSON строки:</label>
-        <select id="parseJsonStrings">
-            <option value="true">Да</option>
-            <option value="false">Нет</option>
-        </select>
-    </div>
-</div>
-
-<button id="generateBtn" disabled>Сгенерировать VM-шаблон</button>
-
-<pre id="vmCodeDisplay" style="display:none;"></pre>
-
-<button id="saveBtn" style="display:none;">Сохранить шаблон</button>
-<button id="сlearBtn" style="display:none;">Удалить шаблон</button>
-<script>
-    let projectName = '';
-    let jsonSchema = null;
-    let xsdSchema = '';
-    let testJsons = [];
-
-    // Получение доступа к элементам
-    const projectNameInput = document.getElementById('projectName');
+    <li class="input-group">
+      <label for="xsdSchemaInput" class="required-field">XSD-схема вида сведений</label>
+      <label for="xsdSchemaInput" class="custom-file-upload">загрузить файл</label>
+      <input type="file" id="xsdSchemaInput" accept=".xsd" />
+    </ul>
+    <li class="input-group">
+      <label for="testJsonsInput" class="required-field">Тестовые JSON-файлы (необязательно):</label>
+      <label for="testJsonsInput" class="custom-file-upload">загрузить файл</label>
+      <input type="file" id="testJsonsInput" accept=".json" multiple />
+    </li>
+    </ul>
+    <button id="generateBtn" disabled>Создать</button>
+      <pre id="vmCodeDisplay"></pre>
+  <script>
+    const projectNameInput = document.getElementById('projectNameInput');
     const jsonSchemaInput = document.getElementById('jsonSchemaInput');
     const xsdSchemaInput = document.getElementById('xsdSchemaInput');
     const testJsonsInput = document.getElementById('testJsonsInput');
     const generateBtn = document.getElementById('generateBtn');
     const vmCodeDisplay = document.getElementById('vmCodeDisplay');
-    const saveBtn = document.getElementById('saveBtn');
-    const сlearBtn = document.getElementById('сlearBtn');
 
-    // Элементы управления параметрами
-    const prefixInput = document.getElementById('prefix');
-    const handleNullValuesSelect = document.getElementById('handleNullValues');
-    const dateFormatInput = document.getElementById('dateFormat');
-    const transformFieldNamesSelect = document.getElementById('transformFieldNames');
-    const generateConditionalsSelect = document.getElementById('generateConditionals');
-    const listElementNameInput = document.getElementById('listElementName');
-    const validateDataSelect = document.getElementById('validateData');
-    const parseJsonStringsSelect = document.getElementById('parseJsonStrings');
+    let projectName = '';
+    let jsonSchema = null;
+    let xsdSchema = null;
+    let testJsons = [];
 
     function updateCanGenerate() {
-        generateBtn.disabled = !(projectName && jsonSchema && xsdSchema && testJsons.length > 0);
+      generateBtn.disabled = !(projectName && jsonSchema && xsdSchema);
     }
 
-    projectNameInput.addEventListener('input', e => {
-        projectName = e.target.value.trim();
-        updateCanGenerate();
+    projectNameInput.addEventListener('input', () => {
+      projectName = projectNameInput.value.trim();
+      updateCanGenerate();
     });
 
-    async function readFileContent(file) {
-        return new Promise((resolve, reject) => {
-            const reader = new FileReader();
-
-            reader.onload = () => {
-                resolve(reader.result);
-            };
-
-            reader.onerror = () => {
-                reject(reader.error);
-            };
-
-            reader.readAsText(file);
-        });
-    }
-
-
-    jsonSchemaInput.addEventListener('change', async e => {
-        const file = e.target.files[0];
-        if (!file) return;
-
+    jsonSchemaInput.addEventListener('change', async (e) => {
+      const file = e.target.files[0];
+      if (file) {
+        const text = await file.text();
         try {
-            const fileContent = await readFileContent(file);
-            
-
-            try {
-                jsonSchema = JSON.parse(fileContent);
-                updateCanGenerate();
-            } catch {
-                alert('Ошибка парсинга JSON-схемы');
-                jsonSchema = null;
-                updateCanGenerate();
-            }
-        } catch (error) {
-            alert(`Ошибка чтения файла: ${error.message}`);
-            jsonSchema = null;
-            updateCanGenerate();
+          jsonSchema = JSON.parse(text);
+          jsonSchemaInput.style.borderColor = 'green';
+        } catch (err) {
+          alert('Ошибка парсинга JSON-схемы');
+          jsonSchemaInput.style.borderColor = 'red';
+          jsonSchema = null;
         }
+      } else {
+        jsonSchema = null;
+      }
+      updateCanGenerate();
     });
 
+    xsdSchemaInput.addEventListener('change', async (e) => {
+      const file = e.target.files[0];
+      if (file) {
+        xsdSchema = await file.text();
+        xsdSchemaInput.style.borderColor = 'green';
+      } else {
+        xsdSchema = null;
+      }
+      updateCanGenerate();
+    });
 
-    xsdSchemaInput.addEventListener('change', async e => {
-        const file = e.target.files[0];
-        if (!file) return;
-
+    testJsonsInput.addEventListener('change', async (e) => {
+      testJsons = [];
+      for (const file of e.target.files) {
+        const text = await file.text();
         try {
-            const fileContent = await readFileContent(file);
-            if (!fileContent) {
-                xsdSchema = null;
-                updateCanGenerate();
-                return;
-            }
-            xsdSchema = fileContent;
-            updateCanGenerate();
-        } catch (error) {
-            alert(`Ошибка чтения файла: ${error.message}`);
-            xsdSchema = null;
-            updateCanGenerate();
+          testJsons.push(JSON.parse(text));
+        } catch (err) {
+          console.warn(`Ошибка парсинга ${file.name}`);
         }
-
+      }
     });
 
-
-    testJsonsInput.addEventListener('change', async e => {
-        const files = Array.from(e.target.files);
-        const parsedJsons = [];
-
-        for (const file of files) {
-            try {
-                const fileContent = await readFileContent(file);
-                if (!fileContent) {
-                    jsonSchema = null;
-                    updateCanGenerate();
-                    continue;
-                }
-                try {
-                    const parsedJson = JSON.parse(fileContent);
-                    parsedJsons.push(parsedJson);
-                } catch (error) {
-                    alert(`Ошибка парсинга тестового JSON ${file.name}: ${error.message}`);
-                    continue;
-                }
-            } catch (error) {
-                alert(`Ошибка чтения файла: ${error.message}`);
-            }
-        }
-
-        testJsons = parsedJsons;
-        updateCanGenerate();
-
-    });
-
+    // Фиксированные параметры (по умолчанию)
+    const params = {
+      prefix: "soc:",
+      handleNullValues: "omit",
+      dateFormat: "yyyy-MM-dd",
+      transformFieldNames: "pascalCase",
+      generateConditionals: true,
+      listElementName: "Child",
+      parseJsonStrings: true
+    };
 
     generateBtn.addEventListener('click', async () => {
-        if (!(projectName && jsonSchema && xsdSchema && testJsons.length > 0)) {
-            alert('Заполните все поля и загрузите все необходимые файлы');
-            return;
-        }
+      if (!window.electronAPI) {
+        alert("API не загружено");
+        return;
+      }
 
-        try {
-            const params = {
-                "prefix": "soc:",
-                "handleNullValues":false,
-                "dateFormat": "yyyy-MM-dd",
-                "transformFieldNames": "camelCase",
-                "generateConditionals": true,
-                "listElementName": "Child",
-                "validateData": true,
-                "parseJsonStrings":true
-            };
+      const data = {
+        projectName,
+        jsonSchema,
+        xsdSchema,
+        testJsons
+      };
 
-            const template = await window.electronAPI.loadTemplate();
-        
-        const data = {
-            schema: jsonSchema,
-            xsdSchema: xsdSchema,
-            testJsons: testJsons,
-            projectName: projectName
-        };
-        console.log(data);
-        const result = await window.electronAPI.createVMTemplate(template, JSON.stringify(data, null, 2),JSON.stringify(params, null, 2));
-
-            if (result && result.success) {
-                const vmCode = template;
-                vmCodeDisplay.textContent = vmCode;
-                vmCodeDisplay.style.display = 'block';
-                saveBtn.style.display = 'inline-block';
-                сlearBtn.style.display="inline-block";
-                saveBtn.vmCode = vmCode;
-            } else {
-                alert("Ошибка при создании VM-шаблона: " + (result.error || "Неизвестная ошибка"));
-                console.error("Error creating VM-шаблона:", result.error);
-            }
-
-        } catch (error) {
-            console.error("Error creating XML:", error);
-            alert("Ошибка при создании VM-шаблона: " + error.message);
-
-        }
+      try {
+        const vmCode = await window.electronAPI.createVMTemplate(null, data, params);
+        vmCodeDisplay.textContent = vmCode;
+        vmCodeDisplay.style.display="block";
+      } catch (err) {
+        alert("Ошибка генерации: " + err.message);
+      }
     });
 
-    сlearBtn.addEventListener('click', async () => {
-        vmCodeDisplay.textContent = ""
-    });
-    saveBtn.addEventListener('click', async () => {
-        if (!saveBtn.vmCode) return;
-
-        try {
-            const result = await window.electronAPI.saveFile(saveBtn.vmCode);
-            if (result && result.success) {
-                alert(`Файл успешно сохранён: ${result.filePath}`);
-            } else if (result && result.canceled) {
-                alert('Сохранение отменено'); 
-            } else {
-                alert('Ошибка при сохранении: ' + (result?.error || 'Неизвестная ошибка'));
-            }
-        } catch (error) {
-            console.error("Error saving file:", error);
-            alert("Ошибка при сохранении файла: " + error.message);
-        }
-    });
-
-</script>
-
+    updateCanGenerate();
+  </script>
 </body>
 </html>

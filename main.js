@@ -1,187 +1,378 @@
-const { app, BrowserWindow, ipcMain, dialog } = require('electron');
+const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
 const fs = require('fs');
-const Velocity = require('velocityjs');
+const X2JS = require('x2js');
 
-let templateGlobal = null;
+// Утилиты
+const x2js = new X2JS();
 
-async function loadTemplateFromDisk() {
-  try {
-    const templatePath = path.join(__dirname, 'template.vm');
-    const tpl = await fs.promises.readFile(templatePath, 'utf8');
-    templateGlobal = tpl;
-    return tpl;
-  } catch (err) {
-    console.warn('Не удалось прочитать template.vm:', err.message);
-    templateGlobal = null;
-    return null;
-  }
-}
+// Функция генерации VM-шаблона из схем
+function generateVMFromSchemas(jsonSchema, xsdSchema, params = {}) {
+    const defaultParams = {
+        prefix: "soc:",
+        handleNullValues: "omit",
+        dateFormat: "yyyy-MM-dd",
+        transformFieldNames: "pascalCase",
+        generateConditionals: true,
+        listElementName: "Child",
+        parseJsonStrings: true
+    };
 
+    const merged = { ...defaultParams, ...params };
+    const { prefix, handleNullValues, transformFieldNames, generateConditionals, listElementName } = merged;
 
-async function createWindow() {
-  try {
-    await loadTemplateFromDisk();
+    const { XMLParser } = require('fast-xml-parser');
 
-
-const win = new BrowserWindow({
-  width: 1200,
-  height: 800,
-  webPreferences: {
-    nodeIntegration: false,
-    contextIsolation: true,
-    preload: path.join(__dirname, 'preload.js')
-  }
-});
-
-await win.loadFile('index.html');
-console.log('index.html загружен успешно');
-
-} catch (err) {
-    console.error('Failed to create window:', err);
-  }
-}
-
-
-app.whenReady().then(createWindow);
-
-
-app.on('activate', function () {
-  if (BrowserWindow.getAllWindows().length === 0) createWindow();
-});
-
-
-function createDateTool() {
-  return {
-    toDate(format, str) {
-      if (!str) return null;
-      try {
-        if (/^\d{2}.\d{2}.\d{4}$/.test(str)) {
-          const [d, m, y] = str.split('.');
-          return new Date(Number(y), Number(m) - 1, Number(d));
-        }
-        if (/^\d{4}-\d{2}-\d{2}/.test(str)) {
-          return new Date(str);
-        }
-        const dt = new Date(str);
-        return isNaN(dt) ? null : dt;
-      } catch (e) {
-        return null;
-      }
-    },
-    format(fmt, date) {
-      if (!date) return '';
-      const d = (date instanceof Date) ? date : new Date(date);
-      if (isNaN(d)) return '';
-      const yyyy = d.getFullYear();
-      const MM = String(d.getMonth() + 1).padStart(2, '0');
-      const dd = String(d.getDate()).padStart(2, '0');
-      const HH = String(d.getHours()).padStart(2, '0');
-      const mm = String(d.getMinutes()).padStart(2, '0');
-      const ss = String(d.getSeconds()).padStart(2, '0');
-      return fmt.replace('yyyy', yyyy).replace('MM', MM).replace('dd', dd)
-                .replace('HH', HH).replace('mm', mm).replace('ss', ss);
-    }
-  };
-}
-
-
-function isEmptyHelper(obj) {
-  if (obj === null || obj === undefined) return true;
-  if (typeof obj === 'string') return obj.trim().length === 0;
-  if (Array.isArray(obj)) return obj.length === 0;
-  if (typeof obj === 'object') return Object.keys(obj).length === 0;
-  return false;
-}
-
-
-function attachIsEmpty(obj, seen = new WeakSet()) {
-  if (!obj || typeof obj !== 'object') return;
-  if (seen.has(obj)) return;
-  seen.add(obj);
-
-
-try {
-    if (!Object.prototype.hasOwnProperty.call(obj, 'isEmpty')) {
-      Object.defineProperty(obj, 'isEmpty', {
-        value: function() { return isEmptyHelper(this); },
-        enumerable: false,
-        configurable: true,
-        writable: false
-      });
-    }
-  } catch (e) {
-
-  }
-
-
-for (const k of Object.keys(obj)) {
+    let xsdJson;
     try {
-      if (typeof obj[k] === 'object') attachIsEmpty(obj[k], seen);
-    } catch (e) {}
-  }
+        const parser = new XMLParser({
+            ignoreAttributes: false,
+            attributeNamePrefix: '$',
+            allowBooleanAttributes: true,
+            parseAttributeValue: false,
+            ignoreDeclaration: false,
+            trimValues: false,
+            parseTagValue: true,
+
+        });
+        xsdJson = parser.parse(xsdSchema);
+
+    } catch (err) {
+        throw new Error('Не удалось распарсить XSD как XML: ' + err.message);
+    }
+    function findNodeByLocalName(obj, localName, depth = 0) {
+        if (!obj || typeof obj !== 'object' || depth > 20) return null;
+        for (const key of Object.keys(obj)) {
+            const keyLower = String(key).toLowerCase();
+            if (keyLower === localName || keyLower === localName.toLowerCase() || keyLower.endsWith(':' + localName.toLowerCase()) || keyLower.includes(':' + localName.toLowerCase())) {
+                return obj[key];
+            }
+        }
+        for (const key of Object.keys(obj)) {
+            const val = obj[key];
+            if (val && typeof val === 'object') {
+                const found = findNodeByLocalName(val, localName, depth + 1);
+                if (found) return found;
+            }
+        }
+        return null;
+    }
+
+    const xsdRoot = findNodeByLocalName(xsdJson, 'schema');
+    if (!xsdRoot) {
+        console.error('fast-xml-parser top-level keys:', Object.keys(xsdJson || {}));
+        throw new Error('Некорректная XSD: не найден корневой элемент <schema>. Проверьте содержимое и префиксы.');
+    }
+
+    function collectElementsFrom(node) {
+        const res = [];
+        if (!node || typeof node !== 'object') return res;
+        for (const key of Object.keys(node)) {
+            const kLower = key.toLowerCase();
+            if (kLower === 'element' || kLower.endsWith(':element') || kLower.includes(':element')) {
+                const v = node[key];
+                if (Array.isArray(v)) res.push(...v);
+                else res.push(v);
+            }
+        }
+
+        if (res.length === 0) {
+            for (const key of Object.keys(node)) {
+                const v = node[key];
+                if (v && typeof v === 'object') {
+                    const deeper = collectElementsFrom(v);
+                    if (deeper.length) res.push(...deeper);
+                }
+            }
+        }
+        return res;
+    }
+
+    const topElements = collectElementsFrom(xsdRoot);
+    if (!topElements || topElements.length === 0) {
+        console.error('Не найден top-level element в xsdRoot. xsdRoot keys:', Object.keys(xsdRoot || {}));
+        throw new Error('Некорректная XSD: не найден top-level element.');
+    }
+
+    let targetElement = topElements.find(el => el.$ && !el.$.substitutionGroup) || topElements[0];
+    if (!targetElement) {
+        throw new Error('Не удалось определить корневой xs:element.');
+    }
+
+    const typeDefinitions = {};
+    function collectComplexTypes(node) {
+        if (!node || typeof node !== 'object') return;
+        for (const key of Object.keys(node)) {
+            const kLower = key.toLowerCase();
+            if (kLower === 'complextype' || kLower.endsWith(':complextype') || kLower.includes(':complextype')) {
+                const v = node[key];
+                if (Array.isArray(v)) {
+                    v.forEach(ct => { if (ct && ct.$ && ct.$.name) typeDefinitions[ct.$.name] = ct; });
+                } else if (v && v.$ && v.$.name) {
+                    typeDefinitions[v.$.name] = v;
+                }
+            }
+        }
+        for (const key of Object.keys(node)) {
+            const val = node[key];
+            if (val && typeof val === 'object') collectComplexTypes(val);
+        }
+    }
+    collectComplexTypes(xsdRoot);
+
+    function resolveComplexTypeForElement(element) {
+        if (!element) return null;
+        const attrs = element.$ || {};
+
+        if (attrs.type) {
+            const typeName = String(attrs.type).split(':').pop();
+            if (typeDefinitions[typeName]) return typeDefinitions[typeName];
+        }
+        for (const key of Object.keys(element)) {
+            const kLower = key.toLowerCase();
+            if (kLower === 'complextype' || kLower.endsWith(':complextype') || kLower.includes(':complextype') || kLower === 'complexType'.toLowerCase()) {
+                return element[key];
+            }
+            if ((kLower === 'sequence' || kLower.endsWith(':sequence') || kLower.includes(':sequence')) && element['$'] === undefined) {
+                return element;
+            }
+        }
+        return null;
+    }
+
+    function getTypeOfField(complexType, fieldName) {
+        if (!complexType) return null;
+
+        const containers = [];
+
+        for (const key of Object.keys(complexType)) {
+            const kLower = key.toLowerCase();
+            if (kLower === 'xs:sequence' || kLower === 'sequence' || kLower.endsWith(':sequence') || kLower.includes(':sequence')) {
+                containers.push(complexType[key]);
+            } else if (kLower === 'xs:choice' || kLower === 'choice' || kLower.endsWith(':choice') || kLower.includes(':choice')) {
+                containers.push(complexType[key]);
+            } else if (kLower === 'xs:all' || kLower === 'all' || kLower.endsWith(':all') || kLower.includes(':all')) {
+                containers.push(complexType[key]);
+            }
+        }
+
+        const findIn = (container) => {
+            if (!container || typeof container !== 'object') return null;
+            for (const key of Object.keys(container)) {
+                const kl = key.toLowerCase();
+                if (kl === 'element' || kl.endsWith(':element') || kl.includes(':element')) {
+                    const elems = container[key];
+                    if (!elems) continue;
+                    if (Array.isArray(elems)) {
+                        const found = elems.find(e => {
+                            if (!e || !e.$) return false;
+                            return e.$.name === fieldName || (e.$.ref && e.$.ref.endsWith(':' + fieldName));
+                        });
+                        if (found) return found.$;
+                    } else if (elems.$) {
+                        const e = elems;
+                        if (e.$.name === fieldName || (e.$.ref && e.$.ref.endsWith(':' + fieldName))) return e.$;
+                    }
+                }
+            }
+            return null;
+        };
+
+        for (const cont of containers) {
+            const res = findIn(cont);
+            if (res) return res;
+        }
+
+        const direct = findIn(complexType);
+        if (direct) return direct;
+
+        return null;
+    }
+
+
+    const toPascalCase = (str) => (str && str.length ? str.charAt(0).toUpperCase() + str.slice(1) : str);
+    const toCamelCase = (str) => (str && str.length ? str.charAt(0).toLowerCase() + str.slice(1) : str);
+    const identityTransform = (name) => name;  // Добавлена функция identityTransform
+    const transformName = (name) => {
+        if (transformFieldNames === "pascalCase") return toPascalCase(name);
+        if (transformFieldNames === "camelCase") return toCamelCase(name);
+        return identityTransform(name); 
+    };
+
+    const vmLines = [];
+
+    function generateField(parentVar, schema, complexType, indent = "") {
+        let props = null;
+
+        // Логируем входящую схему для отладки.
+        console.log("Incoming schema:", schema);
+
+        // Обработка $ref на корневом уровне схемы
+        if (schema.$ref) {
+            const refName = String(schema.$ref).split('/').pop();
+            const definition = jsonSchema.definitions && jsonSchema.definitions[refName];
+
+            if (definition) {
+                schema = definition;
+                console.log("Schema after $ref resolution:", schema);
+            } else {
+                console.warn(`Определение не найдено для $ref: ${schema.$ref}`);
+                return;
+            }
+        }
+
+        if (Array.isArray(schema)) {
+            console.log("Schema is an array of components");
+            props = {};
+            schema.forEach(component => {
+                if (component && typeof component === 'object') {
+
+                    Object.assign(props, component);
+                }
+            });
+            console.log("Props (from array of components):", props);
+
+        } else if (schema.properties && typeof schema.properties === 'object') {
+
+            props = schema.properties;
+            console.log("Props (from schema.properties):", props); 
+        }
+        else if (schema && schema.type === 'object' && !schema.properties && jsonSchema.definitions) {
+
+            const keys = Object.keys(jsonSchema.definitions);
+            if (keys.length > 0) {
+                // Берем первое определение как корневое, если не указано иного
+                const firstDefinitionKey = keys[0];
+                const firstDefinition = jsonSchema.definitions[firstDefinitionKey];
+                if (firstDefinition && firstDefinition.properties) {
+                    props = firstDefinition.properties;
+                    console.log("Props (from first definition):", props); // ADDED LOG
+                }
+            }
+        }
+        console.log("Props value", props)
+        if (!props) {
+            console.warn(`Свойства не найдены для схемы ${schema}`);
+            return;
+        }
+
+        Object.keys(props).forEach(key => {
+            const prop = props[key];
+            const xmlFieldInfo = getTypeOfField(complexType, key);
+            const isRequired = xmlFieldInfo && xmlFieldInfo.$ && xmlFieldInfo.$.minOccurs !== "0";
+            const maxOccurs = xmlFieldInfo && xmlFieldInfo.$ && xmlFieldInfo.$.maxOccurs;
+            const isList = maxOccurs === "unbounded" || (maxOccurs && !isNaN(parseInt(maxOccurs)) && parseInt(maxOccurs) > 1);
+            let typeName = xmlFieldInfo && xmlFieldInfo.$ && xmlFieldInfo.$.type ? String(xmlFieldInfo.$.type).split(":").pop() : null;
+            const vmName = transformName(key);
+            const valueExpr = `$!{esc.xml($${parentVar}.${key})}`;
+
+            const wrapInIf = generateConditionals && handleNullValues === "omit" && !isRequired;
+
+            if (wrapInIf) {
+                vmLines.push(`${indent}#if($!{${parentVar}.${key}})`);
+                indent += "  "; 
+            }
+            if (isList) {
+                vmLines.push(`${indent}<${prefix}${vmName}>`);
+                vmLines.push(`${indent}  #foreach($item in $!{${parentVar}.${key}})`); 
+                if (prop.type === "object") {
+                    const innerType = typeDefinitions[typeName]; // Получаем определение типа элемента из XSD
+
+                    vmLines.push(`${indent}    <${listElementName}>`);
+                    generateField("item", prop, innerType, indent + "    "); // Рекурсивно генерируем поля для элемента списка
+                    vmLines.push(`${indent}    </${listElementName}>`);
+                } else {
+                    vmLines.push(`${indent}    <${listElementName}>${`$!{esc.xml($item)}`}</${listElementName}>`); // Генерируем простой элемент списка
+                }
+
+                vmLines.push(`${indent}  #end`);
+                vmLines.push(`${indent}</${prefix}${vmName}>`);
+            }
+            // Если поле является объектом
+            else if (prop.type === "object") {
+                let innerType = null;
+                if (typeName && typeDefinitions[typeName]) innerType = typeDefinitions[typeName];
+                // Если тип не найден по имени, ищем по ссылке $ref
+                if (!innerType && prop.$ref) {
+                    const refName = String(prop.$ref).split('/').pop();
+                    if (typeDefinitions[refName]) innerType = typeDefinitions[refName];
+                }
+
+                vmLines.push(`${indent}<${prefix}${vmName}>`);
+                generateField(`${parentVar}.${key}`, prop, innerType, indent + "  "); // Рекурсивно генерируем поля для объекта
+                vmLines.push(`${indent}</${prefix}${vmName}>`);
+            }
+            // Если поле является простым типом
+            else {
+                vmLines.push(`${indent}<${prefix}${vmName}>${valueExpr}</${prefix}${vmName}>`); // Генерируем простой элемент
+            }
+
+            // Если поле было обернуто в условие #if
+            if (wrapInIf) {
+                indent = indent.slice(0, -2); // Уменьшаем отступ
+                vmLines.push(`${indent}#end`);
+            }
+        });
+    }
+
+
+
+    // Начало XML
+    vmLines.push('<?xml version="1.0" encoding="UTF-8"?>');
+    vmLines.push(`<Data xmlns:${prefix.replace(':', '')}="${prefix.replace(':', '').slice(0, -1)}">`);
+    const rootComplexType = resolveComplexTypeForElement(targetElement);
+    generateField("root", jsonSchema, rootComplexType);
+
+    vmLines.push('</Data>');
+
+    return vmLines.join('\n');
 }
 
-
-ipcMain.handle('create-vm-template', async (event, templateParam = null, data = {}, params = {}) => {
-  try {
-    let templateToUse = templateParam || templateGlobal;
-    if (!templateToUse) {
-      templateToUse = await loadTemplateFromDisk();
-    }
-    if (!templateToUse) {
-      return { success: false, error: 'Template is empty or not found' };
-    }
-
-
-const context = Object.assign({}, data);
-
-context.params = params || {};
-
-context.dateTool = createDateTool();
-context.isEmpty = isEmptyHelper;
-
-try { attachIsEmpty(context); } catch (e) {  }
-
-const vmCode = Velocity.render(templateToUse, context);
-return { success: true, vmCode };
-
-} catch (error) {
-    console.error('Error creating VM template:', error);
-    return { success: false, error: error.message || String(error) };
-  }
-});
-
-
-ipcMain.handle('load-template', async () => {
-  try {
-    if (!templateGlobal) {
-      await loadTemplateFromDisk();
-    }
-    return templateGlobal;
-  } catch (error) {
-    console.error('Ошибка при чтении файла шаблона:', error);
-    return null;
-  }
-});
-
-
-ipcMain.handle('save-file', async (event, content) => {
-  try {
-    const { canceled, filePath } = await dialog.showSaveDialog({
-      title: 'Сохранить VM-шаблон',
-      defaultPath: 'template.vm',
-      filters: [{ name: 'VM Template', extensions: ['vm', 'txt'] }]
+// Electron
+function createWindow() {
+    const win = new BrowserWindow({
+        width: 1000,
+        height: 800,
+        autoHideMenuBar: true,
+        webPreferences: {
+            preload: path.join(__dirname, 'preload.js'),
+            contextIsolation: true,
+        },
     });
 
+    win.loadFile('index.html');
+}
 
-if (canceled) return { canceled: true };
+app.whenReady().then(() => {
+    createWindow();
 
-await fs.promises.writeFile(filePath, content, 'utf8');
-return { success: true, filePath };
+    app.on('activate', () => {
+        if (BrowserWindow.getAllWindows().length === 0) createWindow();
+    });
+});
 
-} catch (err) {
-    console.error('Error saving file:', err);
-    return { success: false, error: err.message || String(err) };
+app.on('window-all-closed', () => {
+    if (process.platform !== 'darwin') app.quit();
+});
+async function readFileAsync(filePath) {
+  try {
+    const data = await fs.readFile(filePath, 'utf-8');
+    return data;
+  } catch (err) {
+    console.error("Ошибка при чтении файла:", err);
+    throw err;
   }
+}
+
+ipcMain.handle('create-vm-template', async (event, _, data, params) => {
+    try {
+        const { jsonSchema, xsdSchema } = data;
+        const vmCode = generateVMFromSchemas(jsonSchema, xsdSchema, params);
+        const templatePath = path.join(__dirname, 'template.vm');
+        const tpl = await fs.promises.readFile(templatePath, 'utf8');
+        return tpl;
+    } catch (err) {
+        console.error('Ошибка генерации VM-шаблона:', err);
+        throw new Error(`Генерация не удалась: ${err.message}`);
+    }
 });
