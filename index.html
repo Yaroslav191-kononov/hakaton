@@ -133,14 +133,14 @@
             const reader = new FileReader();
 
             reader.onload = () => {
-                resolve(reader.result); // Содержимое файла как строка
+                resolve(reader.result);
             };
 
             reader.onerror = () => {
                 reject(reader.error);
             };
 
-            reader.readAsText(file); // Читаем файл как текст
+            reader.readAsText(file);
         });
     }
 
@@ -151,11 +151,7 @@
 
         try {
             const fileContent = await readFileContent(file);
-            if (!fileContent) {
-                jsonSchema = null;
-                updateCanGenerate();
-                return;
-            }
+            
 
             try {
                 jsonSchema = JSON.parse(fileContent);
@@ -225,7 +221,6 @@
     });
 
 
-    //Обработчик нажатия на кнопку
     generateBtn.addEventListener('click', async () => {
         if (!(projectName && jsonSchema && xsdSchema && testJsons.length > 0)) {
             alert('Заполните все поля и загрузите все необходимые файлы');
@@ -233,7 +228,6 @@
         }
 
         try {
-            //Собираем параметры из полей ввода
             const params = {
                 "prefix": prefixInput.value,
                 "handleNullValues": handleNullValuesSelect.value,
@@ -246,8 +240,15 @@
             };
 
             const template = await window.electronAPI.loadTemplate();
-
-            const result = await window.electronAPI.createVMTemplate(template, jsonSchema, params);
+        
+        const data = {
+            schema: jsonSchema,
+            xsdSchema: xsdSchema,
+            testJsons: testJsons,
+            projectName: projectName
+        };
+        console.log(data);
+        const result = await window.electronAPI.createVMTemplate(template, JSON.stringify(data, null, 2),JSON.stringify(params, null, 2));
 
             if (result && result.success) {
                 const vmCode = result.vmCode;
@@ -276,7 +277,7 @@
             if (result && result.success) {
                 alert(`Файл успешно сохранён: ${result.filePath}`);
             } else if (result && result.canceled) {
-                alert('Сохранение отменено'); // optional, since the dialog already indicates this
+                alert('Сохранение отменено'); 
             } else {
                 alert('Ошибка при сохранении: ' + (result?.error || 'Неизвестная ошибка'));
             }
