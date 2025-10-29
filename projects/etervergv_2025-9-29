@@ -1,0 +1,895 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Annotation Запрос на выполнение действий. Можно
+сделать одно из 3-х: направить заявление, отменить заявление, запросить справочник-->
+<!--complex
+content-->
+<soc:AppDataRequest xmlns:xml="http://www.w3.org/XML/1998/namespace"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soc="http://socit.ru/kalin/orders/2.0.0"
+    xmlns:soc1="http://socit.ru/kalin/orders/2.0.0/attachments">
+  <soc:SetRequest>
+    <soc:orderId>$orderId</soc:orderId>
+    <soc:ServiceCode>3900000000173812673</soc:ServiceCode>
+    <soc:ServiceName>Выплата молодой семье при рождении третьего или последующего ребёнка</soc:ServiceName>
+    <soc:SpravID>1</soc:SpravID>
+    #if($ApplicantChoice == "v1") <soc:DelegateInfo>1</soc:DelegateInfo> #else <soc:DelegateInfo>2</soc:DelegateInfo> #end
+
+    <!-- Пользовательские данные -->
+    ## за себя
+            #if ( $ApplicantChoice == "v1" && $citizenshipCode=="RUS")
+                #set ( $userLastName = $PersonalInfo.storedValues.lastName )
+                #set ( $userFirstName = $PersonalInfo.storedValues.firstName )
+                #set ( $userMiddleName = $PersonalInfo.storedValues.middleName )
+                #set ( $userBirthDate = $dateTool.format('yyyy-MM-dd',$dateTool.toDate('dd.MM.yyyy',$PersonalInfo.storedValues.birthDate)) )
+                #if ($PersonalInfo.storedValues.gender == 'M')
+                    #set ( $userGender = "М")
+                #else
+                    #set ( $userGender = "Ж")
+                #end
+                #set ( $userSnils = $PersonalInfo.storedValues.snils )
+                #set ( $userPhone = $c43 )
+                #set ( $userEmail = $c44 )
+                #set ( $userCitizenshiip = 'РОССИЯ')
+                #set ( $userBirthPlace = $PersonalInfo.storedValues.birthPlace ) 
+## за другого
+            #elseif ($ApplicantChoice == "v2")
+                #set ( $userLastName = $c58 )
+                #set ( $userFirstName = $c59 )
+                #set ( $userMiddleName = $c60 )
+                #set ( $userBirthDate = $dateTool.format('yyyy-MM-dd', $dateTool.toDate('yyyy-MM-dd', $c61) ) )
+                #if ($c66 == '2')
+                    #set ( $userGender = "М")
+                #else
+                    #set ( $userGender = "Ж")
+                #end
+                #set ( $userSnils = $c63 )
+                #set ( $userPhone = $c8 )
+                #set ( $userEmail = $c65 )
+                #set ( $userCitizenshiip = 'РОССИЯ')
+                #set ( $userBirthPlace = $c62 )
+
+            #end
+    <soc:userData>
+      <soc:lastName>$userLastName</soc:lastName>
+      <soc:firstName>$userFirstName</soc:firstName>
+      #if($userMiddleName && $userMiddleName != "")
+      <soc:middleName>$userMiddleName</soc:middleName>
+      #end
+      <soc:birthDate>$userBirthDate</soc:birthDate>
+      <soc:Sex>$userGender</soc:Sex>
+      <soc:Snils>$userSnils</soc:Snils>
+      #if($userPhone && $userPhone != "")
+      <soc:phone>$userPhone</soc:phone>
+      #end
+      #if($userEmail && $userEmail != "")
+      <soc:Email>$userEmail</soc:Email>
+      #end
+      <soc:citizenship>$userCitizenshiip</soc:citizenship>
+      <soc:mrog>$userBirthPlace</soc:mrog>
+    </soc:userData>
+
+    ## за себя
+            #if ($ApplicantChoice == "v1" && $citizenshipCode=="RUS")
+                    #set( $userDoctype = "21" )
+                    #set( $userPSeries = $PersonalInfo['storedValues']['rfPasportSeries'] )
+                    #set( $userPNumber = $PersonalInfo['storedValues']['rfPasportNumber'] )
+                    #set( $userPIssuedBy = $PersonalInfo['storedValues']['rfPasportIssuedBy'] )
+                    #set( $userPIssueDate = $dateTool.format('yyyy-MM-dd', $dateTool.toDate("dd.MM.yyyy",$PersonalInfo['storedValues']['rfPasportIssueDate'] )))
+                    #set( $userdepartmentCode = $PersonalInfo['storedValues']['rfPasportIssuedByIdFormatted'])
+## за другого
+            #elseif ($ApplicantChoice == "v2")
+                    #if ($c75 && !$c75.isEmpty())
+                    #set( $userDoctype = "21" )
+                    #set( $userPSeries = $c75['series'] )
+                    #set( $userPNumber = $c75['number'] )
+                    #set( $userPIssuedBy = $c75['emitter'] )
+                    #set( $userPIssueDate = $dateTool.format('yyyy-MM-dd', $dateTool.toDate("yyyy-MM-dd",$c75['date'])) )
+                    #set ( $userdepartmentCode = $c75['issueId'])
+                    #end
+            #end
+    <!-- Паспортные данные пользователя -->
+    <soc:userDocument>
+      <soc:type>$userDoctype</soc:type>
+      <soc:series>$userPSeries</soc:series>
+      <soc:number>$userPNumber</soc:number>
+      <soc:issuedBy>$userPIssuedBy</soc:issuedBy>
+      <soc:issueDate>$userPIssueDate</soc:issueDate>
+      <soc:departmentCode>$userdepartmentCode</soc:departmentCode>
+    </soc:userDocument>
+
+    #if ($c42 || $c47 || $c53)
+		<soc:userAdditionalDocuments>
+		#if ( $c42 )
+            #set ( $date = $dateTool.format('yyyy-MM-dd', $dateTool.toDate('yyyy-MM-dd', $c42.act_rec_date)) )
+            #set ($doctype="108")
+            #set ($number=$c42.act_rec_number)
+            #set ($issuedBy=$c42.act_rec_registrator.text)
+        #end
+        #if ( $c47 )
+            #set ( $date = $dateTool.format('yyyy-MM-dd', $dateTool.toDate('yyyy-MM-dd', $c47.act_rec_date)) )
+            #set ($doctype="110")
+            #set ($number=$c47.act_rec_number)
+            #set ($issuedBy=$c47.act_rec_registrator.text)
+        #end
+        #if ( $c53 )
+            #set ( $date = $dateTool.format('yyyy-MM-dd', $dateTool.toDate('yyyy-MM-dd', $c53.act_rec_date)) )
+            #set ($doctype="109")
+            #set ($number=$c53.act_rec_number)
+            #set ($issuedBy=$c53.act_rec_registrator.text)
+        #end
+		<soc:AdditionalDocument>
+		<soc:type>$doctype</soc:type>
+        <soc:number>$number</soc:number>
+        <soc:issuedBy>$issuedBy</soc:issuedBy>
+        <soc:issueDate>$date</soc:issueDate>
+		</soc:AdditionalDocument>
+		</soc:userAdditionalDocuments>
+        #end
+
+    <!-- Представитель заявителя (при наличии) -->
+    #if ( $ApplicantChoice == "v2" )
+                #if ($citizenshipCode=="RUS")
+                #set ( $declarantlastName = $PersonalInfo.storedValues.lastName )
+                #set ( $declarantfirstName = $PersonalInfo.storedValues.firstName )
+                #set ( $declarantmiddleName = $PersonalInfo.storedValues.middleName )
+                #set ( $declarantbirthDate = $dateTool.format('yyyy-MM-dd',$dateTool.toDate('dd.MM.yyyy',$PersonalInfo.storedValues.birthDate)) )
+                #if ($PersonalInfo.storedValues.gender == 'M')
+                    #set ( $declarantgender = "М")
+                #else
+                    #set ( $declarantgender = "Ж")
+                #end
+                #set ( $declarantsnils = $PersonalInfo.storedValues.snils )
+                #set ( $declarantphoneflc = $c43 )
+                #set ( $declarantemailflc = $c44 )
+                #end
+      <soc:DeclarantTypePerson>Представитель по доверенности</soc:DeclarantTypePerson>
+      <soc:declarantData>
+        <soc:lastName>$declarantlastName</soc:lastName>
+        <soc:firstName>$declarantfirstName</soc:firstName>
+        #if($declarantmiddleName && $declarantmiddleName != "")
+        <soc:middleName>$declarantmiddleName</soc:middleName>
+        #end
+        <soc:birthDate>$declarantbirthDate</soc:birthDate>
+        <soc:Sex>$declarantgender</soc:Sex>
+        <soc:Snils>$declarantsnils</soc:Snils>
+        #if($declarantphoneflc && $declarantphoneflc != "")
+        <soc:phone>$declarantphoneflc</soc:phone>
+        #end
+        #if($declarantemailflc && $declarantemailflc != "")
+        <soc:Email>$declarantemailflc</soc:Email>
+        #end
+      </soc:declarantData>
+      
+                  #if ($citizenshipCode=="RUS")
+                    #set( $doctype = "21" )
+                    #set( $series = $PersonalInfo['storedValues']['rfPasportSeries'] )
+                    #set( $number = $PersonalInfo['storedValues']['rfPasportNumber'] )
+                    #set( $issuedBy = $PersonalInfo['storedValues']['rfPasportIssuedBy'] )
+                    #set( $issueDate = $dateTool.format('yyyy-MM-dd', $dateTool.toDate("dd.MM.yyyy",$PersonalInfo['storedValues']['rfPasportIssueDate'] )))
+                    #set( $departmentCode = $PersonalInfo['storedValues']['rfPasportIssuedByIdFormatted'])
+            #end
+      <soc:declarantDocument>
+        <soc:type>$doctype</soc:type>
+        <soc:series>$series</soc:series>
+        <soc:number>$number</soc:number>
+        <soc:issuedBy>$issuedBy</soc:issuedBy>
+        <soc:issueDate>$issueDate</soc:issueDate>
+        <soc:departmentCode>$departmentCode</soc:departmentCode>
+      </soc:declarantDocument>
+    #end
+
+    <!-- Список детей -->
+
+      <soc:children>
+          #foreach($chi in $c2)
+        <soc:child>
+
+        #if ( $chi.sc40_2800 && $chi.sc40_2800!="")
+          <soc:childAdditionalDocuments>
+          <soc:AdditionalDocument>
+          #if ( $c28 )
+            #set ($date=$dateTool.format('yyyy-MM-dd', $dateTool.toDate("yyyy-MM-dd",$chi.sc40_2800['date'])))
+            #set ($doctype="21")
+            #set ($series=$chi.sc40_2800['series'])
+            #set ($number=$chi.sc40_2800['number'])
+            #set ($issuedBy=$chi.sc40_2800['emitter'])
+            #set ($departmentCode=$chi.sc40_2800['issueId'])
+          #end
+          <soc:type>$doctype</soc:type>
+          <soc:series>$series</soc:series>
+          <soc:number>$number</soc:number>
+          <soc:issuedBy>$issuedBy</soc:issuedBy>
+          <soc:issueDate>$date</soc:issueDate>
+          <soc:departmentCode>$departmentCode</soc:departmentCode>
+          </soc:AdditionalDocument>
+          </soc:childAdditionalDocuments>
+        #end
+
+          <soc:childData>
+            <soc:lastName>$chi.c6</soc:lastName>
+            <soc:firstName>$chi.c7</soc:firstName>
+            #if ( $chi.c12 && $chi.c12 != "" )
+              <soc:middleName>$chi.c12</soc:middleName>
+            #end
+            <soc:birthDate>$dateTool.format('yyyy-MM-dd', $dateTool.toDate("yyyy-MM-dd",$chi.c13))</soc:birthDate>
+            #if ($chi.c15 == 'M') #set( $chi.childGender = "М" ) #else #set( $chi.childGender = "Ж" ) #end
+            <soc:Sex>$chi.childGender</soc:Sex>
+            
+            #if ( $chi.c24=="RF_BRTH_CERT" || $chi.sc17_2800=="1" )
+              <soc:citizenship>РОССИЯ</soc:citizenship>
+            #else
+              <soc:citizenship>ИНОСТРАННОЕ ГОСУДАРСТВО</soc:citizenship>
+            #end
+          </soc:childData>
+          
+          <soc:childDocument>
+                    #if ($chi.sc25_2800 && !$chi.sc25_2800.isEmpty())
+                    #set( $chiDoctype = "106" )
+                    #set( $chiSeries = "" )
+                    #set( $chiNumber = $chi.sc25_2800 )
+                    #set( $chiIssuedBy = $chi.sc26_2800.text )
+                    #set( $chiIssueDate = $dateTool.format('yyyy-MM-dd', $dateTool.toDate("yyyy-MM-dd",$chi.sc24_2800)) )
+                    #end
+                    #if ($chi.sc36_2800 && !$chi.sc36_2800.isEmpty())
+                    #set( $chiDoctype = "23" )
+                    #set( $chiSeries = $chi.sc36_2800['series']  )
+                    #set( $chiNumber = $chi.sc36_2800['number'] )
+                    #set( $chiIssuedBy = $chi.sc36_2800['emitter'] )
+                    #set( $chiIssueDate = $dateTool.format('yyyy-MM-dd', $dateTool.toDate("yyyy-MM-dd",$chi.sc36_2800['date'])) )
+                    #end
+## confirm1
+                    #if ($chi.sc42_2800 && !$chi.sc42_2800.isEmpty())
+                    #set( $chiDoctype = "106" )
+                    #set( $chiSeries = "" )
+                    #set( $chiNumber = $chi.sc42_2800.storedValues['rfBirthCertificateActNumber'] )
+                    #set( $chiIssuedBy = $chi.sc42_2800.storedValues['rfBirthCertificateIssuedBy'] )
+                    #set( $chiIssueDate = $dateTool.format('yyyy-MM-dd', $dateTool.toDate("dd.MM.yyyy",$chi.sc42_2800.storedValues['actDate'])))
+                    #end
+## confirm2
+                    #if ($chi.sc44_2800 && !$chi.sc44_2800.isEmpty())
+                    #set( $chiDoctype = "23" )
+                    #set( $chiSeries = $chi.sc44_2800.storedValues['foreignBirthCertificateSeries'] )
+                    #set( $chiNumber = $chi.sc44_2800.storedValues['foreignBirthCertificateNumber'] )
+                    #set( $chiIssuedBy = $chi.sc44_2800.storedValues['foreignBirthCertificateIssuedBy'] )
+                    #set( $chiIssueDate = $chi.sc44_2800.storedValues['rfBirthCertificateIssueDate'] )
+                    #end
+            <!--START:[sequence]-->
+            <!--next
+            5 items are in a [sequence] group-->
+            <soc:type>$chiDoctype</soc:type>
+            <!--next
+            1 item is optional (minOccurs = 0)-->
+            #if ( $chiSeries && $chiSeries != "" )
+                <soc:series>$chiSeries</soc:series>
+            #end
+            #if ( $chiNumber && $chiNumber != "" )
+                <soc:number>$chiNumber</soc:number>
+            #end
+            #if ( $chiIssuedBy && $chiIssuedBy != "" )
+                <soc:issuedBy>$chiIssuedBy</soc:issuedBy>
+            #end
+            #if ( $chiIssueDate && $chiIssueDate != "" )
+                <soc:issueDate>$chiIssueDate</soc:issueDate>
+            #end
+            <!--END:[sequence]-->
+          </soc:childDocument>
+
+            <!--next
+            1 item is optional (minOccurs = 0)-->
+            #if ($chi.c108=="1" )             
+<soc:childAdditionally>
+
+#if ($chi.c108=="1")
+<soc:info name="Адрес ребёнка" parent="Адрес ребёнка">Совпадает с адресом получателя услуги</soc:info>
+#end
+
+</soc:childAdditionally>
+#end
+
+          #if ($chi.c109 != "" && $chi.c109 )
+          <soc:childAddressLive>
+            
+                #set ( $fiasHouseCode = $chi.c109.fiasCode )
+                #set ( $index = $chi.c109.index )
+                #set ( $town = $chi.c109.city )
+                #set ( $street = $chi.c109.streetShortType + ' ' + $chi.c109.street )
+                #set ( $house = $chi.c109.house )
+                #set ( $apartment = $chi.c109.apartment )
+                #set ( $strAddress = $chi.c109.fullAddress )
+
+            #if ( $fiasHouseCode && $fiasHouseCode != "" )
+                <soc:fiasHouseCode>$fiasHouseCode</soc:fiasHouseCode>
+            #end
+            #if ( $index && $index != "" ) 
+                <soc:index>$index</soc:index>
+            #end
+            #if ( $town && $town != "" )
+                <soc:town>$town</soc:town>
+            #end
+            #if ( $street && $street != "" ) 
+                <soc:street>$street</soc:street>
+            #end
+            #if ( $house && $house != "" ) 
+                <soc:house>$house</soc:house>
+            #end
+            #if ( $apartment && $apartment != "" )
+                <soc:apartment>$apartment</soc:apartment>
+            #end
+            <soc:strAddress>$strAddress</soc:strAddress>
+            </soc:childAddressLive>
+            #end
+        </soc:child>
+            #end
+
+          #foreach($chi in $c112)
+        <soc:child>
+
+        #if ( $chi.sc40_2800 && $chi.sc40_2800!="")
+          <soc:childAdditionalDocuments>
+          <soc:AdditionalDocument>
+          #if ( $c28 )
+            #set ($date=$dateTool.format('yyyy-MM-dd', $dateTool.toDate("yyyy-MM-dd",$chi.sc40_2800['date'] )))
+            #set ($doctype="21")
+            #set ($series=$chi.sc40_2800['series'])
+            #set ($number=$chi.sc40_2800['number'])
+            #set ($issuedBy=$chi.sc40_2800['emitter'])
+            #set ($departmentCode=$chi.sc40_2800['issueId'])
+          #end
+          <soc:type>$doctype</soc:type>
+          <soc:series>$series</soc:series>
+          <soc:number>$number</soc:number>
+          <soc:issuedBy>$issuedBy</soc:issuedBy>
+          <soc:issueDate>$date</soc:issueDate>
+          <soc:departmentCode>$departmentCode</soc:departmentCode>
+          </soc:AdditionalDocument>
+          </soc:childAdditionalDocuments>
+        #end
+
+          <soc:childData>
+            <soc:lastName>$chi.c115</soc:lastName>
+            <soc:firstName>$chi.c116</soc:firstName>
+            #if ( $chi.c117 && $chi.c117 != "" )
+              <soc:middleName>$chi.c117</soc:middleName>
+            #end
+            <soc:birthDate>$dateTool.format('yyyy-MM-dd', $dateTool.toDate("yyyy-MM-dd",$chi.c118))</soc:birthDate>
+            #if ($chi.c119 == 'M') #set( $chi.childGender = "М" ) #else #set( $chi.childGender = "Ж" ) #end
+            <soc:Sex>$chi.childGender</soc:Sex>
+            
+            #if ( $chi.c24=="RF_BRTH_CERT" || $chi.sc17_2800=="1" )
+              <soc:citizenship>РОССИЯ</soc:citizenship>
+            #else
+              <soc:citizenship>ИНОСТРАННОЕ ГОСУДАРСТВО</soc:citizenship>
+            #end
+          </soc:childData>
+          
+          <soc:childDocument>
+                    #if ($chi.sc25_2800 && !$chi.sc25_2800.isEmpty())
+                    #set( $chiDoctype = "106" )
+                    #set( $chiSeries = "" )
+                    #set( $chiNumber = $chi.sc25_2800 )
+                    #set( $chiIssuedBy = $chi.sc26_2800.text )
+                    #set( $chiIssueDate = $dateTool.format('yyyy-MM-dd', $dateTool.toDate("yyyy-MM-dd",$chi.sc24_2800)) )
+                    #end
+                    #if ($chi.sc36_2800 && !$chi.sc36_2800.isEmpty())
+                    #set( $chiDoctype = "23" )
+                    #set( $chiSeries = $chi.sc36_2800['series']  )
+                    #set( $chiNumber = $chi.sc36_2800['number'] )
+                    #set( $chiIssuedBy = $chi.sc36_2800['emitter'] )
+                    #set( $chiIssueDate = $dateTool.format('yyyy-MM-dd', $dateTool.toDate("yyyy-MM-dd",$chi.sc36_2800['date'])) )
+                    #end
+## confirm1
+                    #if ($chi.sc42_2800 && !$chi.sc42_2800.isEmpty())
+                    #set( $chiDoctype = "106" )
+                    #set( $chiSeries = "" )
+                    #set( $chiNumber = $chi.sc42_2800.storedValues['rfBirthCertificateActNumber'] )
+                    #set( $chiIssuedBy = $chi.sc42_2800.storedValues['rfBirthCertificateIssuedBy'] )
+                    #set( $chiIssueDate = $dateTool.format('yyyy-MM-dd', $dateTool.toDate("dd.MM.yyyy",$chi.sc42_2800.storedValues['actDate'])))
+                    #end
+## confirm2
+                    #if ($chi.sc44_2800 && !$chi.sc44_2800.isEmpty())
+                    #set( $chiDoctype = "23" )
+                    #set( $chiSeries = $chi.sc44_2800.storedValues['foreignBirthCertificateSeries'] )
+                    #set( $chiNumber = $chi.sc44_2800.storedValues['foreignBirthCertificateNumber'] )
+                    #set( $chiIssuedBy = $chi.sc44_2800.storedValues['foreignBirthCertificateIssuedBy'] )
+                    #set( $chiIssueDate = $chi.sc44_2800.storedValues['rfBirthCertificateIssueDate'] )
+                    #end
+            <!--START:[sequence]-->
+            <!--next
+            5 items are in a [sequence] group-->
+            <soc:type>$chiDoctype</soc:type>
+            <!--next
+            1 item is optional (minOccurs = 0)-->
+            #if ( $chiSeries && $chiSeries != "" )
+                <soc:series>$chiSeries</soc:series>
+            #end
+            #if ( $chiNumber && $chiNumber != "" )
+                <soc:number>$chiNumber</soc:number>
+            #end
+            #if ( $chiIssuedBy && $chiIssuedBy != "" )
+                <soc:issuedBy>$chiIssuedBy</soc:issuedBy>
+            #end
+            #if ( $chiIssueDate && $chiIssueDate != "" )
+                <soc:issueDate>$chiIssueDate</soc:issueDate>
+            #end
+            <!--END:[sequence]-->
+          </soc:childDocument>
+
+            <!--next
+            1 item is optional (minOccurs = 0)-->
+            #if ($chi.c108=="1")               
+<soc:childAdditionally>
+
+#if ($chi.c108=="1")
+<soc:info name="Адрес ребёнка" parent="Адрес ребёнка">Совпадает с адресом получателя услуги</soc:info>
+#end
+
+</soc:childAdditionally>
+#end
+
+          #if ($chi.c109 != "" && $chi.c109 )
+          <soc:childAddressLive>
+            
+                #set ( $fiasHouseCode = $chi.c109.fiasCode )
+                #set ( $index = $chi.c109.index )
+                #set ( $town = $chi.c109.city )
+                #set ( $street = $chi.c109.streetShortType + ' ' + $chi.c109.street )
+                #set ( $house = $chi.c109.house )
+                #set ( $apartment = $chi.c109.apartment )
+                #set ( $strAddress = $chi.c109.fullAddress )
+
+            #if ( $fiasHouseCode && $fiasHouseCode != "" )
+                <soc:fiasHouseCode>$fiasHouseCode</soc:fiasHouseCode>
+            #end
+            #if ( $index && $index != "" ) 
+                <soc:index>$index</soc:index>
+            #end
+            #if ( $town && $town != "" )
+                <soc:town>$town</soc:town>
+            #end
+            #if ( $street && $street != "" ) 
+                <soc:street>$street</soc:street>
+            #end
+            #if ( $house && $house != "" ) 
+                <soc:house>$house</soc:house>
+            #end
+            #if ( $apartment && $apartment != "" )
+                <soc:apartment>$apartment</soc:apartment>
+            #end
+            <soc:strAddress>$strAddress</soc:strAddress>
+            </soc:childAddressLive>
+            #end
+        </soc:child>
+            #end
+
+      </soc:children>
+
+    <!-- Супруг получателя услуги -->
+    #if ( $c25 && $c25!= "" )
+      <soc:relatives>
+        <soc:relative>
+          <soc:relativeCategory>Супруг или супруга получателя услуги</soc:relativeCategory>
+          <soc:relativeData>
+            <soc:lastName>$c25</soc:lastName>
+            <soc:firstName>$c26</soc:firstName>
+            #if ( $c30 && $c30 != "" )
+              <soc:middleName>$c30</soc:middleName>
+            #end
+            <soc:birthDate>$dateTool.format('yyyy-MM-dd', $dateTool.toDate("yyyy-MM-dd",$c31))</soc:birthDate>
+            <soc:mrog>$c32</soc:mrog>
+          </soc:relativeData>
+          #if ($c18 && $c18!="")
+          <soc:relativeDocument>
+            <soc:type>21</soc:type>
+            <soc:series>$c18.series</soc:series>
+            <soc:number>$c18.number</soc:number>
+            <soc:issuedBy>$c18.emitter</soc:issuedBy>
+            <soc:issueDate>$dateTool.format('yyyy-MM-dd', $dateTool.toDate("yyyy-MM-dd",$c18.date))</soc:issueDate>
+            <soc:departmentCode>$c18['issueId']</soc:departmentCode>
+          </soc:relativeDocument>
+          #end
+    #if ( $c106=="1" )
+      <soc:relativeAdditionally>
+      <soc:info name="Адрес супруга" parent="Адрес супруга">Совпадает с адресом получателя услуги</soc:info>
+      </soc:relativeAdditionally>
+    #end
+
+    #if ( $c106=="2" )
+      <soc:relativeAddressLive>
+        <soc:fiasHouseCode>$c107.houseFias</soc:fiasHouseCode>
+        <soc:index>$c107.index</soc:index>
+        <soc:town>$c107.city</soc:town>
+        <soc:street>$c107.street</soc:street>
+        <soc:house>$c107.house</soc:house>
+        #if ( $c107.apartment && $c107.apartment != "" )
+        <soc:apartment>$c107.apartment</soc:apartment>
+        #end
+        <soc:strAddress>$c107.addressStr</soc:strAddress>
+      </soc:relativeAddressLive>
+    #end
+        </soc:relative>
+      </soc:relatives>
+    #end
+
+    <!-- Адрес регистрации -->
+    <soc:regAddress>
+      #if ( $ParentAddressRegInfo && $ParentAddressRegInfo!= "" )
+        <soc:fiasHouseCode>$ParentAddressRegInfo.houseFias</soc:fiasHouseCode>
+        <soc:index>$ParentAddressRegInfo.index</soc:index>
+        <soc:town>$ParentAddressRegInfo.city</soc:town>
+        <soc:street>$ParentAddressRegInfo.street</soc:street>
+        <soc:house>$ParentAddressRegInfo.house</soc:house>
+        #if ( $ParentAddressRegInfo.apartment && $ParentAddressRegInfo.apartment != "" )
+        <soc:apartment>$ParentAddressRegInfo.apartment</soc:apartment>
+        #end
+        <soc:strAddress>$ParentAddressRegInfo.addressStr</soc:strAddress>
+      #elseif ($AddressRegInfo)
+        <soc:fiasHouseCode>$AddressRegInfo.address.houseFias</soc:fiasHouseCode>
+        <soc:index>$AddressRegInfo.address.index</soc:index>
+        <soc:town>$AddressRegInfo.address.city</soc:town>
+        <soc:street>$AddressRegInfo.address.street</soc:street>
+        <soc:house>$AddressRegInfo.address.house</soc:house>
+        #if ( $AddressRegInfo.address.apartment && $AddressRegInfo.address.apartment != "" )
+        <soc:apartment>$AddressRegInfo.address.apartment</soc:apartment>
+        #end
+        <soc:strAddress>$AddressRegInfo.address.addressStr</soc:strAddress>
+      #end
+    </soc:regAddress>
+
+    <!-- Временный адрес -->
+    #if ( $c35 )
+      <soc:tempAddress>
+        <soc:fiasHouseCode>$c35.houseFias</soc:fiasHouseCode>
+        <soc:index>$c35.index</soc:index>
+        <soc:town>$c35.city</soc:town>
+        <soc:street>$c35.street</soc:street>
+        <soc:house>$c35.house</soc:house>
+        #if ( $c35.apartment && $c35.apartment != "" )
+        <soc:apartment>$c35.apartment</soc:apartment>
+        #end
+        <soc:strAddress>$c35.addressStr</soc:strAddress>
+      </soc:tempAddress>
+    #end
+
+    <!-- Фактический адрес -->
+    #if ( $c83 )
+      <soc:livingAddress>
+        <soc:fiasHouseCode>$c83.houseFias</soc:fiasHouseCode>
+        <soc:index>$c83.index</soc:index>
+        <soc:town>$c83.city</soc:town>
+        <soc:street>$c83.street</soc:street>
+        <soc:house>$c83.house</soc:house>
+        #if ( $c83.apartment && $c83.apartment != "" )
+        <soc:apartment>$c83.apartment</soc:apartment>
+        #end
+        <soc:strAddress>$c83.addressStr</soc:strAddress>
+      </soc:livingAddress>
+    #end
+
+    <!-- Способ получения выплаты -->
+    <soc:payment>
+      #if( $PayChoice=='v1' )
+
+          #if( $c29=='1' )
+            <soc:PostVariant>REG</soc:PostVariant>
+          #elseif($c29=='2')
+            <soc:PostVariant>LIVE</soc:PostVariant>
+          #else
+            <soc:PostVariant>TEMP</soc:PostVariant>
+          #end
+
+      #elseif ( $PayChoice=='v2' )
+        <soc:BankInfo>
+          #if ($c71 == "false")
+            <soc:bankName>$c55['originalItem']['attributeValues']['NAME']</soc:bankName>
+            <soc:bik>$c55['originalItem']['attributeValues']['BIC']</soc:bik>
+            <soc:account>$c72</soc:account>
+          #else
+            <soc:bankName>$c67</soc:bankName>
+            <soc:bik>$c68</soc:bik>
+            <soc:account>$c72</soc:account>
+          #end
+        </soc:BankInfo>
+      #end
+    </soc:payment>
+
+    #if ( $c87 || $c91 || $c93 || $c94 || $c95 || $c99 || $c101 || $c103 || $c104 || $c105 || $sc38_2800 )
+
+        <!--next
+        1 item is optional (minOccurs = 0)-->
+                <!--complex
+        content-->
+            <soc:AppliedDocuments>
+        <!--next
+        1 item is optional (minOccurs = 0)-->
+                <!--complex
+                content-->
+                #if (!$c101['uploads'].isEmpty())
+                #foreach($upload in $c101['uploads'])
+                    #foreach($fi in $upload['value'])
+                        #if($upload['uploadId'] == "doc")
+                        <soc:AppliedDocument>
+                            <soc:Name>$fi['fileName']</soc:Name>
+                            <!--<soc:URL>$fi['mnemonic'].$fi['fileExt']</soc:URL>-->
+                            <soc:URL>$fi['mnemonic']</soc:URL>
+                            <!--<soc:typeName>$fi['mimeType']</soc:typeName>-->
+                            <soc:typeName>Доверенность</soc:typeName>
+                        </soc:AppliedDocument>
+                        #end
+                    #end
+                #end
+                #end
+                #if (!$c87['uploads'].isEmpty())
+                #foreach($upload in $c87['uploads'])
+                    #foreach($fi in $upload['value'])
+                        #if($upload['uploadId'] == "doc00012")
+                        <soc:AppliedDocument>
+                            <soc:Name>$fi['fileName']</soc:Name>
+                            <!--<soc:URL>$fi['mnemonic'].$fi['fileExt']</soc:URL>-->
+                            <soc:URL>$fi['mnemonic']</soc:URL>
+                            <!--<soc:typeName>$fi['mimeType']</soc:typeName>-->
+                            <soc:typeName>Документ, удостоверяющий личность супруга</soc:typeName>
+                        </soc:AppliedDocument>
+                        #end
+                        #if($upload['uploadId'] == "doc020")
+                        <soc:AppliedDocument>
+                            <soc:Name>$fi['fileName']</soc:Name>
+                            <!--<soc:URL>$fi['mnemonic'].$fi['fileExt']</soc:URL>-->
+                            <soc:URL>$fi['mnemonic']</soc:URL>
+                            <!--<soc:typeName>$fi['mimeType']</soc:typeName>-->
+                            <soc:typeName>Нотариально заверенный перевод на русский язык</soc:typeName>
+                        </soc:AppliedDocument>
+                        #end
+                    #end
+                #end
+                #end
+                #if (!$c91['uploads'].isEmpty())
+                #foreach($upload in $c91['uploads'])
+                    #foreach($fi in $upload['value'])
+                        #if($upload['uploadId'] == "doc003")
+                        <soc:AppliedDocument>
+                            <soc:Name>$fi['fileName']</soc:Name>
+                            <!--<soc:URL>$fi['mnemonic'].$fi['fileExt']</soc:URL>-->
+                            <soc:URL>$fi['mnemonic']</soc:URL>
+                            <!--<soc:typeName>$fi['mimeType']</soc:typeName>-->
+                            <soc:typeName>Свидетельство о заключении брака</soc:typeName>
+                        </soc:AppliedDocument>
+                        #end
+                        #if($upload['uploadId'] == "doc2")
+                        <soc:AppliedDocument>
+                            <soc:Name>$fi['fileName']</soc:Name>
+                            <!--<soc:URL>$fi['mnemonic'].$fi['fileExt']</soc:URL>-->
+                            <soc:URL>$fi['mnemonic']</soc:URL>
+                            <!--<soc:typeName>$fi['mimeType']</soc:typeName>-->
+                            <soc:typeName>Нотариально заверенный перевод на русский язык</soc:typeName>
+                        </soc:AppliedDocument>
+                        #end
+                    #end
+                #end
+                #end
+                #if (!$c95['uploads'].isEmpty())
+                #foreach($upload in $c95['uploads'])
+                    #foreach($fi in $upload['value'])
+                        #if($upload['uploadId'] == "doc0001")
+                        <soc:AppliedDocument>
+                            <soc:Name>$fi['fileName']</soc:Name>
+                            <!--<soc:URL>$fi['mnemonic'].$fi['fileExt']</soc:URL>-->
+                            <soc:URL>$fi['mnemonic']</soc:URL>
+                            <!--<soc:typeName>$fi['mimeType']</soc:typeName>-->
+                            <soc:typeName>Свидетельство о расторжении брака</soc:typeName>
+                        </soc:AppliedDocument>
+                        #end
+                        #if($upload['uploadId'] == "doc2")
+                        <soc:AppliedDocument>
+                            <soc:Name>$fi['fileName']</soc:Name>
+                            <!--<soc:URL>$fi['mnemonic'].$fi['fileExt']</soc:URL>-->
+                            <soc:URL>$fi['mnemonic']</soc:URL>
+                            <!--<soc:typeName>$fi['mimeType']</soc:typeName>-->
+                            <soc:typeName>Нотариально заверенный перевод на русский язык</soc:typeName>
+                        </soc:AppliedDocument>
+                        #end
+                    #end
+                #end
+                #end
+                #if (!$c93['uploads'].isEmpty())
+                #foreach($upload in $c93['uploads'])
+                    #foreach($fi in $upload['value'])
+                        #if($upload['uploadId'] == "doc0001")
+                        <soc:AppliedDocument>
+                            <soc:Name>$fi['fileName']</soc:Name>
+                            <!--<soc:URL>$fi['mnemonic'].$fi['fileExt']</soc:URL>-->
+                            <soc:URL>$fi['mnemonic']</soc:URL>
+                            <!--<soc:typeName>$fi['mimeType']</soc:typeName>-->
+                            <soc:typeName>Свидетельство о перемене имени</soc:typeName>
+                        </soc:AppliedDocument>
+                        #end
+                        #if($upload['uploadId'] == "doc2")
+                        <soc:AppliedDocument>
+                            <soc:Name>$fi['fileName']</soc:Name>
+                            <!--<soc:URL>$fi['mnemonic'].$fi['fileExt']</soc:URL>-->
+                            <soc:URL>$fi['mnemonic']</soc:URL>
+                            <!--<soc:typeName>$fi['mimeType']</soc:typeName>-->
+                            <soc:typeName>Нотариально заверенный перевод на русский язык</soc:typeName>
+                        </soc:AppliedDocument>
+                        #end
+                    #end
+                #end
+                #end
+                #if (!$c94['uploads'].isEmpty())
+                #foreach($upload in $c94['uploads'])
+                    #foreach($fi in $upload['value'])
+                        #if($upload['uploadId'] == "doc0001")
+                        <soc:AppliedDocument>
+                            <soc:Name>$fi['fileName']</soc:Name>
+                            <!--<soc:URL>$fi['mnemonic'].$fi['fileExt']</soc:URL>-->
+                            <soc:URL>$fi['mnemonic']</soc:URL>
+                            <!--<soc:typeName>$fi['mimeType']</soc:typeName>-->
+                            <soc:typeName>Свидетельство о смерти</soc:typeName>
+                        </soc:AppliedDocument>
+                        #end
+                        #if($upload['uploadId'] == "doc2")
+                        <soc:AppliedDocument>
+                            <soc:Name>$fi['fileName']</soc:Name>
+                            <!--<soc:URL>$fi['mnemonic'].$fi['fileExt']</soc:URL>-->
+                            <soc:URL>$fi['mnemonic']</soc:URL>
+                            <!--<soc:typeName>$fi['mimeType']</soc:typeName>-->
+                            <soc:typeName>Нотариально заверенный перевод на русский язык</soc:typeName>
+                        </soc:AppliedDocument>
+                        #end
+                    #end
+                #end
+                #end
+                #if (!$c99['uploads'].isEmpty())
+                #foreach($upload in $c99['uploads'])
+                    #foreach($fi in $upload['value'])
+                        #if($upload['uploadId'] == "doc0001")
+                        <soc:AppliedDocument>
+                            <soc:Name>$fi['fileName']</soc:Name>
+                            <!--<soc:URL>$fi['mnemonic'].$fi['fileExt']</soc:URL>-->
+                            <soc:URL>$fi['mnemonic']</soc:URL>
+                            <!--<soc:typeName>$fi['mimeType']</soc:typeName>-->
+                            <soc:typeName>Решение суда о признании родителя ребёнка безвестно отсутствующим</soc:typeName>
+                        </soc:AppliedDocument>
+                        #end
+                        #if($upload['uploadId'] == "doc2")
+                        <soc:AppliedDocument>
+                            <soc:Name>$fi['fileName']</soc:Name>
+                            <!--<soc:URL>$fi['mnemonic'].$fi['fileExt']</soc:URL>-->
+                            <soc:URL>$fi['mnemonic']</soc:URL>
+                            <!--<soc:typeName>$fi['mimeType']</soc:typeName>-->
+                            <soc:typeName>Нотариально заверенный перевод на русский язык</soc:typeName>
+                        </soc:AppliedDocument>
+                        #end
+                    #end
+                #end
+                #end
+                #if (!$c104['uploads'].isEmpty())
+                #foreach($upload in $c104['uploads'])
+                    #foreach($fi in $upload['value'])
+                        #if($upload['uploadId'] == "doc0001")
+                        <soc:AppliedDocument>
+                            <soc:Name>$fi['fileName']</soc:Name>
+                            <!--<soc:URL>$fi['mnemonic'].$fi['fileExt']</soc:URL>-->
+                            <soc:URL>$fi['mnemonic']</soc:URL>
+                            <!--<soc:typeName>$fi['mimeType']</soc:typeName>-->
+                            <soc:typeName>Решение суда о признании родителя ребёнка безвестно отсутствующим</soc:typeName>
+                        </soc:AppliedDocument>
+                        #end
+                    #end
+                #end
+                #end
+                #if (!$c103['uploads'].isEmpty())
+                #foreach($upload in $c103['uploads'])
+                    #foreach($fi in $upload['value'])
+                        #if($upload['uploadId'] == "doc0001")
+                        <soc:AppliedDocument>
+                            <soc:Name>$fi['fileName']</soc:Name>
+                            <!--<soc:URL>$fi['mnemonic'].$fi['fileExt']</soc:URL>-->
+                            <soc:URL>$fi['mnemonic']</soc:URL>
+                            <!--<soc:typeName>$fi['mimeType']</soc:typeName>-->
+                            <soc:typeName>Справка, подтверждающая, что отец ребёнка вписан в свидетельство о рождении со слов матери</soc:typeName>
+                        </soc:AppliedDocument>
+                        #end
+                        #if($upload['uploadId'] == "doc2")
+                        <soc:AppliedDocument>
+                            <soc:Name>$fi['fileName']</soc:Name>
+                            <!--<soc:URL>$fi['mnemonic'].$fi['fileExt']</soc:URL>-->
+                            <soc:URL>$fi['mnemonic']</soc:URL>
+                            <!--<soc:typeName>$fi['mimeType']</soc:typeName>-->
+                            <soc:typeName>Нотариально заверенный перевод на русский язык</soc:typeName>
+                        </soc:AppliedDocument>
+                        #end
+                    #end
+                #end
+                #end
+                #if (!$c105['uploads'].isEmpty())
+                #foreach($upload in $c105['uploads'])
+                    #foreach($fi in $upload['value'])
+                        #if($upload['uploadId'] == "doc0001")
+                        <soc:AppliedDocument>
+                            <soc:Name>$fi['fileName']</soc:Name>
+                            <!--<soc:URL>$fi['mnemonic'].$fi['fileExt']</soc:URL>-->
+                            <soc:URL>$fi['mnemonic']</soc:URL>
+                            <!--<soc:typeName>$fi['mimeType']</soc:typeName>-->
+                            <soc:typeName>Справка, подтверждающая, что отец ребёнка вписан в свидетельство о рождении со слов матери</soc:typeName>
+                        </soc:AppliedDocument>
+                        #end
+                    #end
+                #end
+                #end
+            #foreach($chi in $c2)
+                    #if ($chi.sc38_2800 && $chi.sc38_2800 != '')
+                #foreach($doc in $chi.sc38_2800['uploads'])
+                   #foreach($fi in $doc['value'])  
+                        <soc:AppliedDocument>
+                            <soc:Name>$fi['fileName']</soc:Name>
+                            <!--<soc:URL>$fi['mnemonic'].$fi['fileExt']</soc:URL>-->
+                            <soc:URL>$fi['mnemonic']</soc:URL>
+                            <!--<soc:typeName>$fi['mimeType']</soc:typeName>-->
+                            <soc:typeName>Свидетельство о рождении</soc:typeName>
+                        </soc:AppliedDocument>
+                    #end
+                #end
+                #end
+                #end
+            #foreach($chi in $c112)
+                    #if ($chi.sc38_2800 && $chi.sc38_2800 != '')
+                #foreach($doc in $chi.sc38_2800['uploads'])
+                   #foreach($fi in $doc['value'])  
+                        <soc:AppliedDocument>
+                            <soc:Name>$fi['fileName']</soc:Name>
+                            <!--<soc:URL>$fi['mnemonic'].$fi['fileExt']</soc:URL>-->
+                            <soc:URL>$fi['mnemonic']</soc:URL>
+                            <!--<soc:typeName>$fi['mimeType']</soc:typeName>-->
+                            <soc:typeName>Свидетельство о рождении</soc:typeName>
+                        </soc:AppliedDocument>
+                    #end
+                #end
+                #end
+                #end
+            </soc:AppliedDocuments>
+        #end
+
+<soc:addInfos>
+    <!-- Реквизиты записей актов гражданского состояния -->
+<soc:addInfo>
+    ##менял ФИО
+#if($c38=="1")
+    <soc:info name="Причина изменения ФИО получателя услуги" parent="Смена ФИО">Заключение брака</soc:info>
+#end
+#if($c38=="2")
+    <soc:info name="Причина изменения ФИО получателя услуги" parent="Смена ФИО">Расторжение брака</soc:info>
+#end
+#if($c38=="3")
+    <soc:info name="Причина изменения ФИО получателя услуги" parent="Смена ФИО">Перемена имени</soc:info>
+#end
+#if($c49)
+    <soc:info name="Предыдущие ФИО получателя услуги" parent="Смена ФИО">$c49</soc:info>
+#end
+
+#if($c56.code=="1")
+    <soc:info name="Причина отсутствия второго родителя ребёнка" parent="Второй родитель">Смерть</soc:info>
+#end
+#if($c56.code=="2")
+    <soc:info name="Причина отсутствия второго родителя ребёнка" parent="Второй родитель">Безвестно отсутствует</soc:info>
+#end
+#if($c56.code=="3")
+    <soc:info name="Причина отсутствия второго родителя ребёнка" parent="Второй родитель">В свидетельстве о рождении в графе «Отец» прочерк</soc:info>
+#end
+#if($c56.code=="4")
+    <soc:info name="Причина отсутствия второго родителя ребёнка" parent="Второй родитель">Отец записан со слов матери</soc:info>
+#end
+
+
+#if( $c3_12896 )
+    #set( $date=$dateTool.format('yyyy-MM-dd',$dateTool.toDate('yyyy-MM-dd',$c3_12896.act_rec_date)) )
+    <soc:info name="Дата записи акта о смерти второго родителя" parent="Реквизиты записи акта о смерти второго родителя">$date</soc:info>
+    <soc:info name="Номер записи акта о смерти второго родителя" parent="Реквизиты записи акта о смерти второго родителя">$c3_12896.act_rec_number</soc:info>
+    <soc:info name="Орган ЗАГС, зарегистрировавший запись акта о смерти второго родителя" parent="Реквизиты записи акта о смерти второго родителя">$c3_12896.act_rec_registrator.text</soc:info>
+#end
+
+                #if ( $c40 )
+                    <soc:info name="Отдел ОГКУ «Центр социальной поддержки населения»">$c40['originalItem']['attributeValues']['SHORT_NAME']</soc:info>
+                #end
+</soc:addInfo>
+</soc:addInfos>    
+  </soc:SetRequest>
+</soc:AppDataRequest>

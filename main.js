@@ -324,15 +324,14 @@ async function generateVMFromSchemas(jsonSchema, xsdSchema, params = {}) {
 // Electron
 function createWindow() {
     const win = new BrowserWindow({
-        width: 1000,
-        height: 800,
+        width: 2000,
+        height: 2000,
         autoHideMenuBar: true,
         webPreferences: {
             preload: path.join(__dirname, 'preload.js'),
             contextIsolation: true,
         },
     });
-
     win.loadFile('index.html');
 }
 
@@ -354,7 +353,9 @@ ipcMain.handle('create-vm-template', async (event, _, data, params) => {
         const vmCode = generateVMFromSchemas(jsonSchema, xsdSchema, params);
         const templatePath = path.join(__dirname, "template.vm");
         const tm=await fs.promises.readFile(templatePath,'utf-8');
-        fs.writeFileSync("projects/"+projectName, tm, { flag: 'a' })
+        let date=new Date();
+        console.log(date.getFullYear()+"-"+date.getMonth()+"-"+date.getDate());
+        fs.writeFileSync("projects/"+projectName+"_"+date.getFullYear()+"-"+date.getMonth()+"-"+date.getDate(), tm, { flag: 'a' })
         return tm;
         return vmCode;
     } catch (err) {

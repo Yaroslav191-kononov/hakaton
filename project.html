@@ -1,43 +1,84 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Загруженные проекты</title>
-<style>
-body {
-    font-family: sans-serif;
-    margin: 0;
-    background-color: #f5f8fa;
-}
-
-.container {
+  <meta charset="UTF-8" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+  <title>Генератор VM-шаблонов</title>
+  <style>
+    :root{
+      --lighter-blue: #D8E1F6;
+      --light-blue: #4D83FA;
+      --blue: #1D5DEB;
+    }
+    *{
+      font-family: "PT Sans", sans-serif;
+    }
+    body { 
+      font-family: 'Inter', sans-serif; margin: 0; padding: 10px; background: #FFFFFF;
+      display: flex;
+   }
+   .left{
     display: flex;
-    height: 100vh;
+    flex-wrap: wrap;
+    width: 320px;
+    justify-content: space-between;
+   }
+   button{
+    border-radius: 11px !important;
+    background-color: var(--blue) !important;
+   }
+   button:hover{
+    background-color: var(--light-blue) !important;
+   }
+   .filters>.left>button:nth-child(1){
+    padding: 15px 50px;
+   }
+      .filters>.left>button:nth-child(2){
+        background-color: white !important;
+        color: var(--blue);
+        border: 2px solid var(--blue);
+        box-sizing: border-box;
+        display: flex;
+        justify-items: baseline;
+   }
+    .elems{
+      width: 20%;
+      padding-top: 40px;
+      border-bottom: 1px solid var(--lighter-blue);
+      border-left: 1px solid var(--lighter-blue);
+      border-top: 1px solid var(--lighter-blue);
+      border-bottom-left-radius: 12px;
+      border-top-left-radius: 12px;
+    }
+    .container {
+      border: 1px solid var(--lighter-blue);
+      width: 80%;
+      height: 730px;
+      padding: 0px 48px 48px 48px;
+      border-bottom-right-radius: 12px;
+      border-top-right-radius: 12px;
+    }
+    .container>h1 {
+      font-size: 3rem;
+      font-weight: 100;
+      color: #1E293B;
+      text-align: center;
+      margin: 40px 0px;
+    }
+ .active-article{
+  background-color: var(--lighter-blue);
 }
-
-.sidebar {
-    width: 200px;
-    background-color: #fff;
-    border-right: 1px solid #e6eaf0;
-    padding: 20px;
+article{
+  height: 70px;
+  font-size: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  padding-left: 10px;
 }
-
-.sidebar ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.sidebar li {
-    padding: 10px 0;
-    cursor: pointer;
-}
-
-.sidebar li:hover {
-    color: #007bff;
-}
-
 .content {
     flex: 1;
     padding: 20px;
@@ -51,84 +92,123 @@ body {
     display: flex;
     gap: 10px;
     margin-bottom: 20px;
+    justify-content: space-between;
 }
 
-.filters button, .filters input {
-    padding: 8px 12px;
+.filters>.left>button, .filters input {
+    padding: 20px 22px;
     border: 1px solid #ced4da;
     border-radius: 5px;
-}
+    font-size: 22px;
 
-.filters button {
+}
+td>button{
+    font-size: 22px;
+}
+.filters input{
+    padding: 20px 20px;
+    width: 320px;
+  border: 2px solid var(--blue);
+    border-radius: 11px;
+
+}
+.filters input::placeholder{
+  color: var(--blue);
+  opacity: 0.3;
+}
+.filters>.left>button {
     background-color: #fff;
     cursor: pointer;
 }
 
-.filters button.active {
+.filters>.left>button.active {
     background-color: #007bff;
     color: #fff;
     border-color: #007bff;
 }
-
 .table-container {
     width: 100%;
-    border: 1px solid #e6eaf0;
-    border-radius: 5px;
-    overflow: hidden;
+    height: 530px;
+    border: 2px solid #D8E1F6;
+    /* border-radius: 11px; */
+    overflow-y: scroll;
 }
-
+tr{
+      border-bottom: 2px solid #D8E1F6;
+    box-sizing: border-box;
+}
 table {
     width: 100%;
     border-collapse: collapse;
+    font-size: 22px;
 }
-
 th, td {
     padding: 12px 15px;
-    text-align: left;
-    border-bottom: 1px solid #e6eaf0;
+    box-sizing: border-box;
+    border-right: 2px solid #D8E1F6;
 }
-
 th {
-    background-color: #f5f8fa;
-    font-weight: 600;
+    background-color: #EDF2FE;
+    color: var(--blue);
+    font-weight: 100;
 }
-
 tbody tr:nth-child(even) {
-    background-color: #f9fafb;
+    background-color: #EDF2FE;
 }
-
 .download-button {
     background-color: #007bff;
     color: #fff;
-    padding: 8px 12px;
+    padding: 20px 60px;
     border: none;
-    border-radius: 5px;
     cursor: pointer;
 }
-
 .download-button:hover {
     background-color: #0056b3;
 }
-</style>
+.filters>input:focus{
+      box-shadow: 0px 0px 0px 2px var(--blue);
+}
+.search>img{
+  position: relative;
+  left: 350px; top: 10px
+}
+table,td,th{
+  text-align: center;
+}
+a{
+    color: black;
+    text-decoration: none;
+}
+  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-
-<div class="container">
-    <div class="sidebar">
-        <ul>
-            <li>Создать услугу</li>
-            <li class="active">Мои проекты</li>
-            <li>Инструкция</li>
-        </ul>
+    <div class="elems">
+        <article class="inactive-article">
+            <img width="45px" src="Rocket_Unselected.png" alt="">
+                        <a href="index.html">&nbsp;&nbsp;Создать услугу</a>
+        </article>
+        <article  class="active-article">
+            <img width="32px" src="Folder_Selected.png" alt="">
+                        <p>&nbsp;&nbsp;&nbsp;&nbsp;Мои проекты</p>
+        </article>
+        <article class="inactive-article">
+            <img width="40px" src="View_Unselected.png" alt="">
+                        <p>&nbsp;&nbsp;&nbsp;Инструкции</p>
+        </article>
     </div>
-    <div class="content">
-        <div class="header">
-            <h1>Загруженные проекты</h1>
-        </div>
+  <div class="container">
+    <h1>Загруженные проекты</h1>
         <div class="filters">
+          <div class="left">
             <button class="active">Все</button>
-            <button>По дате</button>
-            <input type="text" placeholder="Поиск проекта">
+            <button id="date">По дате &nbsp;<img src="Expand Arrow.png" alt=""></button>
+          </div>
+            <div class="search">
+              <img src="Search.png" alt="">
+              <input type="text" placeholder="Поиск проекта">
+            </div>
+            
         </div>
         <div class="table-container">
             <table>
@@ -141,13 +221,11 @@ tbody tr:nth-child(even) {
                     </tr>
                 </thead>
                 <tbody>
-                    
+
                 </tbody>
             </table>
         </div>
-    </div>
 </div>
-
 </body>
 </html>
 <script>
@@ -160,9 +238,9 @@ tbody tr:nth-child(even) {
             let td=document.createElement("td");
             td.textContent=num++;
             let td1=document.createElement("td");
-            td1.textContent=element.name;
+            td1.textContent=element.name.split("_")[0];
             let td2=document.createElement("td");
-            td2.textContent="27.10.2025";
+            td2.textContent=element.name.split("_")[1];
             let td3=document.createElement("td");
             let button=document.createElement("button");
             button.className="download-button";
@@ -180,6 +258,50 @@ tbody tr:nth-child(even) {
     }
 awaike();
 
-
+let check=true;
+document.querySelector("#date").addEventListener("click",async()=>{
+        let arr=await window.electronAPI.getProject()
+        let tbody=document.querySelector("tbody");
+        Array.from(tbody.children).forEach(elem=>elem.remove())
+        let num=1;
+        if(!check){
+          check=!check;
+          arr.sort((a, b) => {
+            const dateA = new Date(a.name.split("_")[1]);
+            const dateB = new Date(b.name.split("_")[1]);
+            return dateA - dateB;
+          });
+        }
+        else{
+          check=!check;
+          arr.sort((a, b) => {
+            const dateA = new Date(a.name.split("_")[1]);
+            const dateB = new Date(b.name.split("_")[1]);
+            return dateB - dateA;
+        });
+        }
+        arr.forEach(element => {
+            let tr=document.createElement("tr");
+            let td=document.createElement("td");
+            td.textContent=num++;
+            let td1=document.createElement("td");
+            td1.textContent=element.name.split("_")[0];
+            let td2=document.createElement("td");
+            td2.textContent=element.name.split("_")[1];
+            let td3=document.createElement("td");
+            let button=document.createElement("button");
+            button.className="download-button";
+            button.textContent="Скачать";
+            button.addEventListener("click",async()=>{
+                const result = await window.electronAPI.saveFile(element.content);
+            });
+            td3.appendChild(button);
+            tr.appendChild(td);
+            tr.appendChild(td1);
+            tr.appendChild(td2);
+            tr.appendChild(td3);
+            tbody.appendChild(tr);
+        });
+    })
 
 </script>
