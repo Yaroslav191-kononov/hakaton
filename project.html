@@ -201,12 +201,12 @@ a{
     <h1>Загруженные проекты</h1>
         <div class="filters">
           <div class="left">
-            <button class="active">Все</button>
+            <button class="active" id="all">Все</button>
             <button id="date">По дате &nbsp;<img src="Expand Arrow.png" alt=""></button>
           </div>
             <div class="search">
               <img src="Search.png" alt="">
-              <input type="text" placeholder="Поиск проекта">
+              <input type="text" placeholder="Поиск проекта" id="Search">
             </div>
             
         </div>
@@ -303,5 +303,64 @@ document.querySelector("#date").addEventListener("click",async()=>{
             tbody.appendChild(tr);
         });
     })
-
+document.querySelector("#all").addEventListener("click",async()=>{
+        let arr=await window.electronAPI.getProject()
+        check=true;
+        let tbody=document.querySelector("tbody");
+        Array.from(tbody.children).forEach(elem=>elem.remove())
+        let num=1;
+        arr.forEach(element => {
+            let tr=document.createElement("tr");
+            let td=document.createElement("td");
+            td.textContent=num++;
+            let td1=document.createElement("td");
+            td1.textContent=element.name.split("_")[0];
+            let td2=document.createElement("td");
+            td2.textContent=element.name.split("_")[1];
+            let td3=document.createElement("td");
+            let button=document.createElement("button");
+            button.className="download-button";
+            button.textContent="Скачать";
+            button.addEventListener("click",async()=>{
+                const result = await window.electronAPI.saveFile(element.content);
+            });
+            td3.appendChild(button);
+            tr.appendChild(td);
+            tr.appendChild(td1);
+            tr.appendChild(td2);
+            tr.appendChild(td3);
+            tbody.appendChild(tr);
+        });
+    })
+    document.querySelector("input").addEventListener('input',async(e)=>{
+        let arr=await window.electronAPI.getProject()
+        let tbody=document.querySelector("tbody");
+        Array.from(tbody.children).forEach(elem=>elem.remove())
+        let num=1;
+        arr.forEach(elem=>console.log(elem.name.split("_")[0]));
+        let maped=arr.filter(element=>element.name.split("_")[0]==document.querySelector("input").value);
+        maped.forEach(element => {
+          console.log(document.querySelector("input").value);
+            let tr=document.createElement("tr");
+            let td=document.createElement("td");
+            td.textContent=num++;
+            let td1=document.createElement("td");
+            td1.textContent=element.name.split("_")[0];
+            let td2=document.createElement("td");
+            td2.textContent=element.name.split("_")[1];
+            let td3=document.createElement("td");
+            let button=document.createElement("button");
+            button.className="download-button";
+            button.textContent="Скачать";
+            button.addEventListener("click",async()=>{
+                const result = await window.electronAPI.saveFile(element.content);
+            });
+            td3.appendChild(button);
+            tr.appendChild(td);
+            tr.appendChild(td1);
+            tr.appendChild(td2);
+            tr.appendChild(td3);
+            tbody.appendChild(tr);
+          })
+    })
 </script>
